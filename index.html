@@ -502,34 +502,7 @@
       nav { gap: 1.6rem; }
       .well { padding: 0 1.2rem 3rem; }
       .links { max-width: 100%; }
-      .wordmark { font-size: clamp(2.6rem, 13vw, 4rem); }
-
-      /* On mobile, horizontal video looks bad full-height.
-         Crop it to a cinematic banner — 55vh, focus on centre */
-      .hero {
-        height: 55vh;
-        min-height: 320px;
-      }
-
-      .hero-video {
-        object-position: center center;
-        /* scale up slightly so subject fills the narrow crop */
-        transform: scale(1.15);
-        transform-origin: center center;
-      }
-
-      /* stronger bottom fade so cut-off isn't jarring */
-      .hero-overlay {
-        background:
-          linear-gradient(to bottom,
-            rgba(19,13,11,0.7)  0%,
-            rgba(19,13,11,0.15) 30%,
-            rgba(19,13,11,0.15) 50%,
-            rgba(19,13,11,0.95) 100%
-          );
-      }
-
-      .wordmark { letter-spacing: 0.1em; }
+      .wordmark { font-size: clamp(2.6rem, 13vw, 4rem); letter-spacing: 0.1em; }
       .scroll-cue { bottom: 1.4rem; }
     }
   </style>
@@ -547,6 +520,7 @@
   <!-- ── HERO VIDEO ── -->
   <section id="hero" class="hero">
     <video class="hero-video" autoplay muted loop playsinline preload="auto">
+      <source media="(max-width: 480px)" src="trailer-vertical.mp4" type="video/mp4" />
       <source src="trailer.mp4" type="video/mp4" />
     </video>
     <div class="hero-overlay"></div>
