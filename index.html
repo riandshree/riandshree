@@ -34,53 +34,29 @@
       color: var(--cream);
       font-family: 'Jost', sans-serif;
       font-weight: 300;
-    }
-
-    /* ── BACKGROUND ── */
-    .bg-photo {
-      position: fixed;
-      inset: 0;
-      background: url('photo.jpg') center 18% / cover no-repeat;
-      z-index: 0;
-    }
-
-    .bg-photo::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background:
-        linear-gradient(to bottom,
-          rgba(19,13,11,0.82) 0%,
-          rgba(19,13,11,0.38) 30%,
-          rgba(19,13,11,0.38) 65%,
-          rgba(19,13,11,0.92) 100%
-        );
-    }
-
-    .bg-grain {
-      position: fixed;
-      inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
-      background-size: 180px;
-      pointer-events: none;
-      z-index: 1;
-      opacity: 0.5;
+      background: var(--dark);
     }
 
     /* ── NAV ── */
     nav {
-      position: sticky;
+      position: fixed;
       top: 0;
-      z-index: 20;
-      width: 100%;
+      left: 0;
+      right: 0;
+      z-index: 100;
       display: flex;
       justify-content: center;
       gap: 2.8rem;
-      padding: 1rem 1.5rem;
-      background: rgba(19,13,11,0.88);
+      padding: 1.2rem 1.5rem;
+      transition: background 0.4s ease, border-color 0.4s ease, backdrop-filter 0.4s ease;
+      border-bottom: 1px solid transparent;
+    }
+
+    nav.scrolled {
+      background: rgba(19,13,11,0.92);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
-      border-bottom: 1px solid var(--border);
+      border-bottom-color: var(--border);
     }
 
     nav a {
@@ -88,31 +64,174 @@
       font-size: 0.59rem;
       letter-spacing: 0.32em;
       text-transform: uppercase;
-      color: var(--muted);
+      color: rgba(237,224,212,0.7);
       text-decoration: none;
       padding-bottom: 3px;
       border-bottom: 1px solid transparent;
       transition: color 0.25s, border-color 0.25s;
     }
 
-    nav a:hover { color: var(--copper-lt); }
+    nav a:hover { color: var(--cream); }
     nav a.active {
       color: var(--copper);
       border-bottom-color: rgba(200,149,103,0.55);
     }
 
-    /* ── OUTER PAGE ── */
-    .page {
+    /* ── HERO ── */
+    .hero {
       position: relative;
+      width: 100%;
+      height: 100vh;
+      min-height: 560px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero-video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      z-index: 0;
+    }
+
+    /* gradient overlay — dark top + dark bottom, photo breathes in middle */
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background:
+        linear-gradient(to bottom,
+          rgba(19,13,11,0.65) 0%,
+          rgba(19,13,11,0.1)  30%,
+          rgba(19,13,11,0.1)  60%,
+          rgba(19,13,11,0.82) 100%
+        );
+    }
+
+    /* grain on hero */
+    .hero-grain {
+      position: absolute;
+      inset: 0;
       z-index: 2;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+      background-size: 180px;
+      pointer-events: none;
+      opacity: 0.45;
+    }
+
+    /* hero text content */
+    .hero-content {
+      position: relative;
+      z-index: 3;
+      text-align: center;
+      padding: 0 1.5rem;
+    }
+
+    .wordmark {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: clamp(3rem, 11vw, 6rem);
+      letter-spacing: 0.16em;
+      color: var(--cream);
+      line-height: 1;
+      text-shadow: 0 2px 40px rgba(19,13,11,0.8);
+    }
+
+    .wordmark span { color: var(--copper); }
+
+    .tagline {
+      margin-top: 1rem;
+      font-size: clamp(0.6rem, 1.8vw, 0.72rem);
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: rgba(219,206,195,0.75);
+    }
+
+    .tagline em {
+      font-style: normal;
+      color: var(--copper-lt);
+    }
+
+    /* scroll cue */
+    .scroll-cue {
+      position: absolute;
+      bottom: 2.4rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 3;
       display: flex;
       flex-direction: column;
       align-items: center;
-      min-height: 100vh;
+      gap: 0.5rem;
+      opacity: 0.5;
+      animation: cue-fade 2.5s ease-in-out infinite;
+    }
+
+    .scroll-cue span {
+      font-size: 0.52rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--copper-lt);
+    }
+
+    .scroll-cue svg {
+      width: 14px;
+      height: 14px;
+      fill: none;
+      stroke: var(--copper-lt);
+      stroke-width: 1.5;
+    }
+
+    @keyframes cue-fade {
+      0%, 100% { opacity: 0.35; transform: translateX(-50%) translateY(0); }
+      50%       { opacity: 0.7;  transform: translateX(-50%) translateY(5px); }
+    }
+
+    /* ── BELOW-HERO BACKGROUND ── */
+    .below-hero {
+      position: relative;
+      background: url('photo.jpg') center 18% / cover no-repeat fixed;
+    }
+
+    .below-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to bottom,
+          rgba(19,13,11,0.92) 0%,
+          rgba(19,13,11,0.48) 25%,
+          rgba(19,13,11,0.48) 75%,
+          rgba(19,13,11,0.92) 100%
+        );
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .below-grain {
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+      background-size: 180px;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.45;
+    }
+
+    /* ── CONTENT WELL ── */
+    .well-wrap {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      justify-content: center;
       padding: 0 1rem 5rem;
     }
 
-    /* ── CONTENT WELL — the cinematic frosted strip ── */
     .well {
       width: 100%;
       max-width: 620px;
@@ -127,7 +246,7 @@
       align-items: center;
     }
 
-    /* ── SECTION ── */
+    /* ── SECTIONS ── */
     .section {
       width: 100%;
       scroll-margin-top: 56px;
@@ -143,35 +262,6 @@
       opacity: 1;
     }
 
-    /* ── HEADER ── */
-    header {
-      width: 100%;
-      padding: 3.2rem 0 0;
-      text-align: center;
-    }
-
-    .wordmark {
-      font-family: 'Cormorant Garamond', serif;
-      font-weight: 300;
-      font-size: clamp(2.6rem, 9vw, 4.6rem);
-      letter-spacing: 0.14em;
-      color: var(--cream);
-      line-height: 1;
-      text-shadow: 0 2px 28px rgba(19,13,11,0.9);
-    }
-
-    .wordmark span { color: var(--copper); }
-
-    .tagline {
-      margin-top: 0.85rem;
-      font-size: 0.68rem;
-      letter-spacing: 0.26em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-
-    .tagline em { font-style: normal; color: var(--copper-lt); }
-
     /* ── DIVIDER ── */
     .divider {
       width: 48px;
@@ -181,7 +271,7 @@
       opacity: 0.65;
     }
 
-    /* ── SONG BLOCK ── */
+    /* ── LATEST RELEASE ── */
     .song-label {
       font-size: 0.63rem;
       letter-spacing: 0.32em;
@@ -213,7 +303,6 @@
       opacity: 1;
     }
 
-    /* ── EMBED ── */
     .embed-wrap {
       width: 100%;
       border-radius: 12px;
@@ -260,7 +349,6 @@
 
     .about-body strong {
       font-weight: 500;
-      font-style: normal;
       color: var(--copper);
     }
 
@@ -271,7 +359,6 @@
       letter-spacing: 0.24em;
       color: var(--copper);
       text-align: center;
-      opacity: 1;
     }
 
     /* ── LINK BUTTONS ── */
@@ -355,12 +442,7 @@
       box-shadow: 0 6px 24px rgba(80,40,90,0.3);
     }
 
-    .link-icon {
-      width: 16px;
-      height: 16px;
-      flex-shrink: 0;
-      fill: currentColor;
-    }
+    .link-icon { width: 16px; height: 16px; flex-shrink: 0; fill: currentColor; }
 
     .link-note {
       text-align: center;
@@ -402,154 +484,179 @@
       font-size: 0.6rem;
       letter-spacing: 0.2em;
       color: var(--copper);
-      opacity: 0.8;
       text-transform: uppercase;
+      opacity: 0.8;
     }
 
-    /* ── ANIMATIONS ── */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(22px); }
+    /* ── HERO ANIMATIONS ── */
+    @keyframes heroFadeUp {
+      from { opacity: 0; transform: translateY(30px); }
       to   { opacity: 1; transform: translateY(0); }
     }
 
-    .fade-1 { animation: fadeUp 1s ease both; animation-delay: 0.08s; }
-    .fade-2 { animation: fadeUp 1s ease both; animation-delay: 0.22s; }
-    .fade-3 { animation: fadeUp 1s ease both; animation-delay: 0.38s; }
-    .fade-4 { animation: fadeUp 1s ease both; animation-delay: 0.54s; }
-    .fade-5 { animation: fadeUp 1s ease both; animation-delay: 0.70s; }
-    .fade-6 { animation: fadeUp 1s ease both; animation-delay: 0.86s; }
+    .hero-wordmark { animation: heroFadeUp 1.2s ease both; animation-delay: 0.3s; }
+    .hero-tagline  { animation: heroFadeUp 1.2s ease both; animation-delay: 0.6s; }
+    .scroll-cue    { animation: cue-fade 2.5s ease-in-out infinite; animation-delay: 1.4s; }
 
     @media (max-width: 480px) {
       nav { gap: 1.6rem; }
       .well { padding: 0 1.2rem 3rem; }
       .links { max-width: 100%; }
+      .wordmark { font-size: clamp(2.6rem, 13vw, 4rem); }
     }
   </style>
 </head>
 <body>
 
-  <div class="bg-photo"></div>
-  <div class="bg-grain"></div>
-
+  <!-- ── STICKY NAV ── -->
   <nav id="main-nav">
-    <a href="#home" class="active">Home</a>
+    <a href="#hero" class="active">Home</a>
+    <a href="#release">Music</a>
     <a href="#about">About</a>
-    <a href="#music">Music</a>
     <a href="#connect">Connect</a>
   </nav>
 
-  <div class="page">
-    <div class="well">
+  <!-- ── HERO VIDEO ── -->
+  <section id="hero" class="hero">
+    <video class="hero-video" autoplay muted loop playsinline preload="auto">
+      <source src="trailer.mp4" type="video/mp4" />
+    </video>
+    <div class="hero-overlay"></div>
+    <div class="hero-grain"></div>
 
-      <!-- ── HOME ── -->
-      <section id="home" class="section" style="scroll-margin-top:56px;">
+    <div class="hero-content">
+      <div class="wordmark hero-wordmark">Ri <span>&</span> Shree</div>
+      <div class="tagline hero-tagline">
+        Independent &nbsp;·&nbsp; Multi-genre &nbsp;·&nbsp; <em>From life, with love</em>
+      </div>
+    </div>
 
-        <header class="fade-1">
-          <div class="wordmark">Ri <span>&</span> Shree</div>
-          <div class="tagline">Independent &nbsp;·&nbsp; Multi-genre &nbsp;·&nbsp; <em>From life, with love</em></div>
-        </header>
+    <div class="scroll-cue">
+      <span>Scroll</span>
+      <svg viewBox="0 0 14 14"><polyline points="2,4 7,10 12,4"/></svg>
+    </div>
+  </section>
 
-        <div class="divider fade-2"></div>
+  <!-- ── BELOW HERO ── -->
+  <div class="below-hero">
+    <div class="below-grain"></div>
+    <div class="well-wrap">
+      <div class="well">
 
-        <div class="fade-3" style="text-align:center;">
-          <div class="song-label">Latest Release</div>
-          <div class="song-title">Aaye Re Piya</div>
-          <div class="song-sub">— Udaipur Sessions —</div>
-        </div>
+        <!-- LATEST RELEASE -->
+        <section id="release" class="section" style="padding-top:0;">
+          <div class="divider" style="margin-top:3rem;"></div>
+          <div style="text-align:center;">
+            <div class="song-label">Latest Release</div>
+            <div class="song-title">Aaye Re Piya</div>
+            <div class="song-sub">— Udaipur Sessions —</div>
+          </div>
 
-        <div class="embed-wrap fade-3">
-          <iframe
-            src="https://www.youtube.com/embed/8mSkUvx4Uss"
-            height="220"
-            allow="autoplay; encrypted-media; fullscreen; picture-in-picture"
-            allowfullscreen
-            loading="lazy"
-            title="Aaye Re Piya - Ri & Shree">
-          </iframe>
-        </div>
+          <div class="embed-wrap">
+            <iframe
+              src="https://www.youtube.com/embed/8mSkUvx4Uss"
+              height="220"
+              allow="autoplay; encrypted-media; fullscreen; picture-in-picture"
+              allowfullscreen
+              loading="lazy"
+              title="Aaye Re Piya - Ri & Shree">
+            </iframe>
+          </div>
 
-        <div class="story fade-4">
-          <p>
-            We ran away to Udaipur.<br />
-            All we wanted was a sunset.<br />
-            <em>A song found us instead.</em>
-          </p>
-        </div>
+          <div class="story">
+            <p>
+              We ran away to Udaipur.<br />
+              All we wanted was a sunset.<br />
+              <em>A song found us instead.</em>
+            </p>
+          </div>
+        </section>
 
-      </section>
+        <!-- ABOUT -->
+        <div class="divider"></div>
 
-      <!-- ── ABOUT ── -->
-      <div class="divider"></div>
+        <section id="about" class="section" style="padding-bottom:2rem;">
+          <div class="section-label">About Us</div>
+          <div class="about-body">
+            We're Ri and Shree — a duo from Bengaluru<br />
+            who find songs in unexpected places.<br /><br />
+            Our music sits between folk and indie,<br />
+            between memory and melody.<br />
+            It doesn't stay in one genre,<br />
+            <strong>because the best feelings never do.</strong><br /><br />
+            New music. Real stories. No filters.
+          </div>
+          <div class="about-tag">#RiAndShree</div>
+        </section>
 
-      <section id="about" class="section" style="padding-bottom:2rem; scroll-margin-top:56px;">
-        <div class="section-label">About Us</div>
-        <div class="about-body">
-          We're Ri and Shree — a duo from Bengaluru<br />
-          who find songs in unexpected places.<br /><br />
-          Our music sits between folk and indie,<br />
-          between memory and melody.<br />
-          It doesn't stay in one genre,<br />
-          <strong>because the best feelings never do.</strong><br /><br />
-          New music. Real stories. No filters.
-        </div>
-        <div class="about-tag">#RiAndShree</div>
-      </section>
+        <!-- MUSIC -->
+        <div class="divider"></div>
 
-      <!-- ── MUSIC ── -->
-      <div class="divider"></div>
+        <section id="music" class="section" style="padding-bottom:2rem;">
+          <div class="section-label">Listen · Subscribe</div>
+          <div class="links">
 
-      <section id="music" class="section" style="padding-bottom:2rem; scroll-margin-top:56px;">
-        <div class="section-label">Listen · Subscribe</div>
-        <div class="links">
+            <a class="link-btn primary" href="https://open.spotify.com/artist/1bnLhrAJK83BcMLtEalAIh?si=JSLSgAGkSjSHegNEHMcXwA" target="_blank" rel="noopener">
+              <svg class="link-icon" viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.371-.721.49-1.101.241-3.021-1.858-6.832-2.278-11.322-1.237-.422.1-.851-.16-.948-.58-.1-.422.16-.851.582-.948 4.912-1.121 9.122-.64 12.513 1.43.371.24.49.721.241 1.101l.035-.007zm1.472-3.27c-.301.459-.929.601-1.388.299-3.449-2.12-8.71-2.738-12.79-1.5-.512.159-1.049-.129-1.209-.638-.159-.511.129-1.05.638-1.209 4.66-1.413 10.452-.73 14.421 1.71.459.301.601.929.299 1.388l.029-.05zm.129-3.4C15.77 8.27 9.21 8.07 5.94 9.08c-.614.181-1.26-.17-1.441-.784-.181-.614.17-1.26.784-1.441 3.77-1.14 10.041-.921 14.01 1.561.541.31.721 1.01.41 1.551-.31.541-1.01.721-1.551.41l-.01.002z"/></svg>
+              Listen on Spotify
+            </a>
 
-          <a class="link-btn primary" href="https://open.spotify.com/artist/1bnLhrAJK83BcMLtEalAIh?si=JSLSgAGkSjSHegNEHMcXwA" target="_blank" rel="noopener">
-            <svg class="link-icon" viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.371-.721.49-1.101.241-3.021-1.858-6.832-2.278-11.322-1.237-.422.1-.851-.16-.948-.58-.1-.422.16-.851.582-.948 4.912-1.121 9.122-.64 12.513 1.43.371.24.49.721.241 1.101l.035-.007zm1.472-3.27c-.301.459-.929.601-1.388.299-3.449-2.12-8.71-2.738-12.79-1.5-.512.159-1.049-.129-1.209-.638-.159-.511.129-1.05.638-1.209 4.66-1.413 10.452-.73 14.421 1.71.459.301.601.929.299 1.388l.029-.05zm.129-3.4C15.77 8.27 9.21 8.07 5.94 9.08c-.614.181-1.26-.17-1.441-.784-.181-.614.17-1.26.784-1.441 3.77-1.14 10.041-.921 14.01 1.561.541.31.721 1.01.41 1.551-.31.541-1.01.721-1.551.41l-.01.002z"/></svg>
-            Listen on Spotify
-          </a>
+            <a class="link-btn apple" href="https://music.apple.com/in/artist/rishab-nair/1607915782" target="_blank" rel="noopener">
+              <svg class="link-icon" viewBox="0 0 24 24"><path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.453 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/></svg>
+              Apple Music
+            </a>
 
-          <a class="link-btn apple" href="https://music.apple.com/in/artist/rishab-nair/1607915782" target="_blank" rel="noopener">
-            <svg class="link-icon" viewBox="0 0 24 24"><path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.453 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/></svg>
-            Apple Music
-          </a>
+            <a class="link-btn youtube" href="https://www.youtube.com/@RiandShree" target="_blank" rel="noopener">
+              <svg class="link-icon" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+              Subscribe on YouTube
+            </a>
 
-          <a class="link-btn youtube" href="https://www.youtube.com/@RiandShree" target="_blank" rel="noopener">
-            <svg class="link-icon" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
-            Subscribe on YouTube
-          </a>
+          </div>
+          <div class="link-note">New content every week</div>
+        </section>
 
-        </div>
-        <div class="link-note">New content every week</div>
-      </section>
+        <!-- CONNECT -->
+        <div class="divider"></div>
 
-      <!-- ── CONNECT ── -->
-      <div class="divider"></div>
+        <section id="connect" class="section" style="padding-bottom:2rem;">
+          <div class="section-label">Follow · Reach Out</div>
+          <div class="links">
 
-      <section id="connect" class="section" style="padding-bottom:2rem; scroll-margin-top:56px;">
-        <div class="section-label">Follow · Reach Out</div>
-        <div class="links">
+            <a class="link-btn instagram" href="https://www.instagram.com/riandshree/" target="_blank" rel="noopener">
+              <svg class="link-icon" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+              Follow on Instagram
+            </a>
 
-          <a class="link-btn instagram" href="https://www.instagram.com/riandshree/" target="_blank" rel="noopener">
-            <svg class="link-icon" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
-            Follow on Instagram
-          </a>
+          </div>
+          <div class="contact-text" style="margin-top:1.6rem;">
+            Say hello —<br />
+            <a href="mailto:riandshree@gmail.com">riandshree@gmail.com</a>
+            &nbsp;or&nbsp;
+            <a href="https://www.instagram.com/riandshree/" target="_blank" rel="noopener">@riandshree</a>
+          </div>
+        </section>
 
-        </div>
-        <div class="contact-text" style="margin-top:1.6rem;">
-          Say hello —<br />
-          <a href="mailto:riandshree@gmail.com">riandshree@gmail.com</a>
-          &nbsp;or&nbsp;
-          <a href="https://www.instagram.com/riandshree/" target="_blank" rel="noopener">@riandshree</a>
-        </div>
-      </section>
+        <footer>
+          <p>&copy; 2025 Ri & Shree &nbsp;·&nbsp; Independent</p>
+        </footer>
 
-      <footer class="fade-6">
-        <p>&copy; 2025 Ri & Shree &nbsp;·&nbsp; Independent</p>
-      </footer>
-
-    </div><!-- /well -->
-  </div><!-- /page -->
+      </div><!-- /well -->
+    </div><!-- /well-wrap -->
+  </div><!-- /below-hero -->
 
   <script>
+    const nav = document.getElementById('main-nav');
+
+    // Darken nav on scroll past hero
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > window.innerHeight * 0.6) {
+        nav.classList.add('scrolled');
+      } else {
+        nav.classList.remove('scrolled');
+      }
+    }, { passive: true });
+
+    // Active nav highlight
     const sections = document.querySelectorAll('section[id]');
     const navLinks = document.querySelectorAll('nav a');
 
@@ -561,9 +668,16 @@
           if (match) match.classList.add('active');
         }
       });
-    }, { rootMargin: '-40% 0px -55% 0px' });
+    }, { rootMargin: '-35% 0px -55% 0px' });
 
     sections.forEach(s => io.observe(s));
+
+    // Hide scroll cue on first scroll
+    const cue = document.querySelector('.scroll-cue');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 80) cue.style.opacity = '0';
+      else cue.style.opacity = '';
+    }, { passive: true, once: false });
   </script>
 
 </body>
