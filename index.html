@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Ri & Shree</title>
-  <meta name="description" content="Independent multi-genre music. Listen to Aaye Re Piya — streaming now." />
+  <meta name="description" content="Independent multi-genre music duo from Bengaluru. New music, real stories." />
   <meta property="og:title" content="Ri & Shree" />
   <meta property="og:description" content="We ran away to Udaipur. A song found us instead." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -14,17 +14,16 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      /* pulled directly from the photo */
-      --dark:       #130d0b;
-      --burgundy:   #562B25;
-      --terra:      #8A593D;
-      --copper:     #C89567;
-      --copper-lt:  #DBCEC3;
-      --cool-slate: #6D778C;
-      --cream:      #EDE0D4;
-      --muted:      #A69D99;
-      --border:     rgba(200,149,103,0.18);
-      --border-warm:rgba(200,149,103,0.35);
+      --dark:        #130d0b;
+      --burgundy:    #562B25;
+      --terra:       #8A593D;
+      --copper:      #C89567;
+      --copper-lt:   #DBCEC3;
+      --cool-slate:  #6D778C;
+      --cream:       #EDE0D4;
+      --muted:       #A69D99;
+      --border:      rgba(200,149,103,0.18);
+      --border-warm: rgba(200,149,103,0.35);
     }
 
     html { scroll-behavior: smooth; }
@@ -37,7 +36,7 @@
       font-weight: 300;
     }
 
-    /* ── PHOTO BACKGROUND ── */
+    /* ── BACKGROUND ── */
     .bg-photo {
       position: fixed;
       inset: 0;
@@ -45,22 +44,19 @@
       z-index: 0;
     }
 
-    /* layered overlay — dark top/bottom, lets midtone breathe,
-       subtle burgundy warmth at base, cool slate hint at top */
     .bg-photo::after {
       content: '';
       position: absolute;
       inset: 0;
       background:
         linear-gradient(to bottom,
-          rgba(19,13,11,0.78) 0%,
+          rgba(19,13,11,0.82) 0%,
           rgba(19,13,11,0.28) 32%,
           rgba(86,43,37,0.22) 58%,
-          rgba(19,13,11,0.88) 100%
+          rgba(19,13,11,0.92) 100%
         );
     }
 
-    /* grain */
     .bg-grain {
       position: fixed;
       inset: 0;
@@ -71,6 +67,43 @@
       opacity: 0.5;
     }
 
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      gap: 2.8rem;
+      padding: 1rem 1.5rem;
+      background: rgba(19,13,11,0.86);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    nav a {
+      font-family: 'Jost', sans-serif;
+      font-size: 0.59rem;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      padding-bottom: 3px;
+      border-bottom: 1px solid transparent;
+      transition: color 0.25s, border-color 0.25s;
+    }
+
+    nav a:hover {
+      color: var(--copper-lt);
+    }
+
+    nav a.active {
+      color: var(--copper);
+      border-bottom-color: rgba(200,149,103,0.55);
+    }
+
     /* ── PAGE ── */
     .page {
       position: relative;
@@ -79,7 +112,26 @@
       flex-direction: column;
       align-items: center;
       min-height: 100vh;
-      padding: 0 1.5rem 4rem;
+      padding: 0 1.5rem 5rem;
+    }
+
+    /* ── SECTION WRAPPER ── */
+    .section {
+      width: 100%;
+      max-width: 580px;
+      margin: 0 auto;
+      scroll-margin-top: 56px;
+    }
+
+    /* ── SECTION LABEL ── */
+    .section-label {
+      font-size: 0.59rem;
+      letter-spacing: 0.38em;
+      text-transform: uppercase;
+      color: var(--terra);
+      text-align: center;
+      margin-bottom: 1.8rem;
+      opacity: 0.85;
     }
 
     /* ── HEADER ── */
@@ -100,7 +152,6 @@
       text-shadow: 0 2px 28px rgba(19,13,11,0.7);
     }
 
-    /* ampersand picks up the copper tone from the photo */
     .wordmark span { color: var(--copper); }
 
     .tagline {
@@ -111,19 +162,18 @@
       color: var(--muted);
     }
 
-    /* the third tagline segment — "From life, with love" — gets warmth */
     .tagline em {
       font-style: normal;
       color: var(--copper-lt);
     }
 
-    /* ── DIVIDER — terracotta pulse ── */
+    /* ── DIVIDER ── */
     .divider {
       width: 48px;
       height: 1px;
       background: linear-gradient(90deg, transparent, var(--terra), var(--copper), var(--terra), transparent);
-      margin: 2.4rem auto;
-      opacity: 0.7;
+      margin: 2.6rem auto;
+      opacity: 0.65;
     }
 
     /* ── SONG BLOCK ── */
@@ -157,7 +207,7 @@
       opacity: 0.85;
     }
 
-    /* ── EMBED — glass with warm tint ── */
+    /* ── EMBED ── */
     .embed-wrap {
       width: 100%;
       max-width: 540px;
@@ -180,7 +230,7 @@
     /* ── STORY ── */
     .story {
       max-width: 420px;
-      margin: 0 auto;
+      margin: 0 auto 2.6rem;
       text-align: center;
     }
 
@@ -193,17 +243,44 @@
       text-shadow: 0 1px 10px rgba(19,13,11,0.5);
     }
 
-    /* the punchline — copper glow */
     .story p em {
       font-style: normal;
       color: var(--copper);
     }
 
-    /* ── LINKS ── */
+    /* ── ABOUT ── */
+    .about-body {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.05rem, 3.2vw, 1.2rem);
+      line-height: 2;
+      color: rgba(237,224,212,0.72);
+      text-align: center;
+      max-width: 460px;
+      margin: 0 auto;
+      text-shadow: 0 1px 12px rgba(19,13,11,0.55);
+    }
+
+    .about-body strong {
+      font-weight: 500;
+      font-style: normal;
+      color: var(--copper);
+    }
+
+    .about-tag {
+      margin-top: 1.6rem;
+      font-family: 'Jost', sans-serif;
+      font-size: 0.63rem;
+      letter-spacing: 0.24em;
+      color: var(--terra);
+      text-align: center;
+      opacity: 0.75;
+    }
+
+    /* ── LINK BUTTONS ── */
     .links {
       display: flex;
       flex-direction: column;
-      gap: 0.8rem;
+      gap: 0.75rem;
       width: 100%;
       max-width: 370px;
       margin: 0 auto;
@@ -218,7 +295,7 @@
       border-radius: 8px;
       text-decoration: none;
       font-family: 'Jost', sans-serif;
-      font-size: 0.76rem;
+      font-size: 0.74rem;
       letter-spacing: 0.2em;
       text-transform: uppercase;
       font-weight: 400;
@@ -232,7 +309,6 @@
       overflow: hidden;
     }
 
-    /* warm shimmer on hover */
     .link-btn::before {
       content: '';
       position: absolute;
@@ -251,43 +327,90 @@
 
     .link-btn:hover::before { opacity: 1; }
 
-    /* Spotify — primary, warmest */
+    /* Spotify */
     .link-btn.primary {
       background: rgba(86,43,37,0.28);
       border-color: rgba(200,149,103,0.4);
       color: var(--copper-lt);
       box-shadow: 0 4px 20px rgba(86,43,37,0.2);
     }
-
     .link-btn.primary:hover {
       background: rgba(138,89,61,0.38);
       box-shadow: 0 8px 32px rgba(86,43,37,0.4);
     }
 
-    /* Apple Music — cool slate tint */
-    .link-btn.apple {
-      border-color: rgba(109,119,140,0.28);
-    }
+    /* Apple Music */
+    .link-btn.apple { border-color: rgba(109,119,140,0.28); }
     .link-btn.apple:hover {
       border-color: rgba(109,119,140,0.55);
       color: #c8cdd8;
       box-shadow: 0 6px 24px rgba(59,60,75,0.35);
     }
 
+    /* YouTube */
+    .link-btn.youtube { border-color: rgba(180,60,50,0.22); }
+    .link-btn.youtube:hover {
+      border-color: rgba(180,60,50,0.5);
+      color: #f2c0bb;
+      box-shadow: 0 6px 24px rgba(120,30,20,0.3);
+    }
+
+    /* Instagram */
+    .link-btn.instagram { border-color: rgba(140,100,140,0.22); }
+    .link-btn.instagram:hover {
+      border-color: rgba(160,120,160,0.45);
+      color: #ddc8e2;
+      box-shadow: 0 6px 24px rgba(80,40,90,0.3);
+    }
+
     .link-icon {
-      width: 17px;
-      height: 17px;
+      width: 16px;
+      height: 16px;
       flex-shrink: 0;
       fill: currentColor;
     }
 
+    /* sub-note under links */
+    .link-note {
+      text-align: center;
+      margin-top: 1rem;
+      font-size: 0.6rem;
+      letter-spacing: 0.22em;
+      color: var(--muted);
+      opacity: 0.6;
+    }
+
+    /* ── CONTACT ── */
+    .contact-text {
+      text-align: center;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1rem, 3vw, 1.1rem);
+      font-style: italic;
+      color: rgba(237,224,212,0.6);
+      line-height: 2.1;
+      margin-top: 0.4rem;
+    }
+
+    .contact-text a {
+      font-style: normal;
+      color: var(--copper);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(200,149,103,0.3);
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .contact-text a:hover {
+      color: var(--copper-lt);
+      border-color: var(--copper);
+    }
+
     /* ── FOOTER ── */
     footer {
-      margin-top: 3.5rem;
+      margin-top: 4rem;
       text-align: center;
-      font-size: 0.62rem;
-      letter-spacing: 0.18em;
-      color: rgba(138,89,61,0.35);
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      color: rgba(138,89,61,0.32);
       text-transform: uppercase;
     }
 
@@ -303,6 +426,12 @@
     .fade-4 { animation: fadeUp 1s ease both; animation-delay: 0.54s; }
     .fade-5 { animation: fadeUp 1s ease both; animation-delay: 0.70s; }
     .fade-6 { animation: fadeUp 1s ease both; animation-delay: 0.86s; }
+
+    /* ── MOBILE ── */
+    @media (max-width: 480px) {
+      nav { gap: 1.8rem; }
+      .links { max-width: 100%; }
+    }
   </style>
 </head>
 <body>
@@ -310,71 +439,140 @@
   <div class="bg-photo"></div>
   <div class="bg-grain"></div>
 
+  <!-- STICKY NAV -->
+  <nav id="main-nav">
+    <a href="#home" class="active">Home</a>
+    <a href="#about">About</a>
+    <a href="#music">Music</a>
+    <a href="#connect">Connect</a>
+  </nav>
+
   <div class="page">
 
-    <header class="fade-1">
-      <div class="wordmark">Ri <span>&</span> Shree</div>
-      <div class="tagline">Independent &nbsp;·&nbsp; Multi-genre &nbsp;·&nbsp; <em>From life, with love</em></div>
-    </header>
+    <!-- ── HOME ── -->
+    <section id="home" class="section" style="padding-top:0; max-width:680px;">
 
-    <div class="divider fade-2"></div>
+      <header class="fade-1">
+        <div class="wordmark">Ri <span>&</span> Shree</div>
+        <div class="tagline">Independent &nbsp;·&nbsp; Multi-genre &nbsp;·&nbsp; <em>From life, with love</em></div>
+      </header>
 
-    <div class="fade-3" style="width:100%;max-width:540px;text-align:center;">
-      <div class="song-label">Latest Release</div>
-      <div class="song-title">Aaye Re Piya</div>
-      <div class="song-sub">— Udaipur Sessions —</div>
-    </div>
+      <div class="divider fade-2"></div>
 
-    <div class="embed-wrap fade-3">
-      <iframe
-        src="https://www.youtube.com/embed/8mSkUvx4Uss"
-        height="220"
-        allow="autoplay; encrypted-media; fullscreen; picture-in-picture"
-        allowfullscreen
-        loading="lazy"
-        title="Aaye Re Piya - Ri & Shree">
-      </iframe>
-    </div>
+      <div class="fade-3" style="text-align:center;">
+        <div class="song-label">Latest Release</div>
+        <div class="song-title">Aaye Re Piya</div>
+        <div class="song-sub">— Udaipur Sessions —</div>
+      </div>
 
-    <div class="story fade-4" style="margin-bottom: 2.6rem;">
-      <p>
-        We ran away to Udaipur.<br />
-        All we wanted was a sunset.<br />
-        <em>A song found us instead.</em>
-      </p>
-    </div>
+      <div class="embed-wrap fade-3">
+        <iframe
+          src="https://www.youtube.com/embed/8mSkUvx4Uss"
+          height="220"
+          allow="autoplay; encrypted-media; fullscreen; picture-in-picture"
+          allowfullscreen
+          loading="lazy"
+          title="Aaye Re Piya - Ri & Shree">
+        </iframe>
+      </div>
 
-    <div class="divider fade-4"></div>
+      <div class="story fade-4">
+        <p>
+          We ran away to Udaipur.<br />
+          All we wanted was a sunset.<br />
+          <em>A song found us instead.</em>
+        </p>
+      </div>
 
-    <div class="links fade-5">
+    </section>
 
-      <a class="link-btn primary" href="https://open.spotify.com/track/4Tgmv1VCwytlwxrS35c2xT" target="_blank" rel="noopener">
-        <svg class="link-icon" viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.371-.721.49-1.101.241-3.021-1.858-6.832-2.278-11.322-1.237-.422.1-.851-.16-.948-.58-.1-.422.16-.851.582-.948 4.912-1.121 9.122-.64 12.513 1.43.371.24.49.721.241 1.101l.035-.007zm1.472-3.27c-.301.459-.929.601-1.388.299-3.449-2.12-8.71-2.738-12.79-1.5-.512.159-1.049-.129-1.209-.638-.159-.511.129-1.05.638-1.209 4.66-1.413 10.452-.73 14.421 1.71.459.301.601.929.299 1.388l.029-.05zm.129-3.4C15.77 8.27 9.21 8.07 5.94 9.08c-.614.181-1.26-.17-1.441-.784-.181-.614.17-1.26.784-1.441 3.77-1.14 10.041-.921 14.01 1.561.541.31.721 1.01.41 1.551-.31.541-1.01.721-1.551.41l-.01.002z"/></svg>
-        Listen on Spotify
-      </a>
+    <!-- ── ABOUT ── -->
+    <div class="divider"></div>
 
-      <a class="link-btn apple" href="https://music.apple.com/in/album/aaye-re-piya/1892508699?i=1892508700" target="_blank" rel="noopener">
-        <svg class="link-icon" viewBox="0 0 24 24"><path d="M23.994 6.124a9.23 9.23 0 0 0-.24-2.19c-.317-1.31-1.062-2.31-2.18-3.043a5.022 5.022 0 0 0-1.769-.75c-.427-.109-.868-.16-1.312-.185-.01-.003-.12-.006-.364-.009H5.868c-.284.003-.463.006-.498.01a8.97 8.97 0 0 0-1.308.181c-1.11.25-2.002.81-2.702 1.698A4.765 4.765 0 0 0 .39 3.985c-.106.4-.166.81-.188 1.22-.013.25-.015.33-.015 5.785v4.204c0 5.456.002 5.536.015 5.786.022.41.082.82.188 1.22.3 1.15 1.003 2.07 1.978 2.668a5.004 5.004 0 0 0 1.784.742c.428.11.87.16 1.314.186.01.002.12.005.363.008h12.21c.246-.003.356-.006.366-.009a8.97 8.97 0 0 0 1.308-.181c1.11-.25 2.002-.81 2.702-1.698a4.765 4.765 0 0 0 .97-1.846c.106-.4.166-.81.188-1.22.013-.25.015-.33.015-5.786V11.91c0-5.456-.002-5.536-.015-5.786zm-6.834 1.77l-4.89 8.7a1.49 1.49 0 0 1-2.04.545l-2.73-1.577a.373.373 0 0 1-.134-.51l.004-.007a.373.373 0 0 1 .51-.134l2.73 1.577a.744.744 0 0 0 1.02-.272l4.89-8.7a.373.373 0 0 1 .51-.134l.007.004a.373.373 0 0 1 .123.508z"/></svg>
-        Apple Music
-      </a>
+    <section id="about" class="section" style="padding: 1rem 0 2rem;">
+      <div class="section-label">About Us</div>
+      <div class="about-body">
+        We're Ri and Shree — a duo from Bengaluru<br />
+        who find songs in unexpected places.<br /><br />
+        Our music sits between folk and indie,<br />
+        between memory and melody.<br />
+        It doesn't stay in one genre,<br />
+        <strong>because the best feelings never do.</strong><br /><br />
+        New music. Real stories. No filters.
+      </div>
+      <div class="about-tag">#RiAndShree</div>
+    </section>
 
-      <a class="link-btn" href="https://youtube.com/shorts/8mSkUvx4Uss" target="_blank" rel="noopener">
-        <svg class="link-icon" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
-        Watch on YouTube
-      </a>
+    <!-- ── MUSIC ── -->
+    <div class="divider"></div>
 
-      <a class="link-btn" href="https://www.instagram.com/riandshree/" target="_blank" rel="noopener">
-        <svg class="link-icon" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
-        Follow on Instagram
-      </a>
+    <section id="music" class="section" style="padding: 1rem 0 2rem;">
+      <div class="section-label">Listen · Subscribe</div>
+      <div class="links">
 
-    </div>
+        <a class="link-btn primary" href="https://open.spotify.com/artist/1bnLhrAJK83BcMLtEalAIh?si=JSLSgAGkSjSHegNEHMcXwA" target="_blank" rel="noopener">
+          <svg class="link-icon" viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.371-.721.49-1.101.241-3.021-1.858-6.832-2.278-11.322-1.237-.422.1-.851-.16-.948-.58-.1-.422.16-.851.582-.948 4.912-1.121 9.122-.64 12.513 1.43.371.24.49.721.241 1.101l.035-.007zm1.472-3.27c-.301.459-.929.601-1.388.299-3.449-2.12-8.71-2.738-12.79-1.5-.512.159-1.049-.129-1.209-.638-.159-.511.129-1.05.638-1.209 4.66-1.413 10.452-.73 14.421 1.71.459.301.601.929.299 1.388l.029-.05zm.129-3.4C15.77 8.27 9.21 8.07 5.94 9.08c-.614.181-1.26-.17-1.441-.784-.181-.614.17-1.26.784-1.441 3.77-1.14 10.041-.921 14.01 1.561.541.31.721 1.01.41 1.551-.31.541-1.01.721-1.551.41l-.01.002z"/></svg>
+          Listen on Spotify
+        </a>
+
+        <a class="link-btn apple" href="https://music.apple.com/in/artist/rishab-nair/1607915782" target="_blank" rel="noopener">
+          <svg class="link-icon" viewBox="0 0 24 24"><path d="M23.994 6.124a9.23 9.23 0 0 0-.24-2.19c-.317-1.31-1.062-2.31-2.18-3.043a5.022 5.022 0 0 0-1.769-.75c-.427-.109-.868-.16-1.312-.185-.01-.003-.12-.006-.364-.009H5.868c-.284.003-.463.006-.498.01a8.97 8.97 0 0 0-1.308.181c-1.11.25-2.002.81-2.702 1.698A4.765 4.765 0 0 0 .39 3.985c-.106.4-.166.81-.188 1.22-.013.25-.015.33-.015 5.785v4.204c0 5.456.002 5.536.015 5.786.022.41.082.82.188 1.22.3 1.15 1.003 2.07 1.978 2.668a5.004 5.004 0 0 0 1.784.742c.428.11.87.16 1.314.186.01.002.12.005.363.008h12.21c.246-.003.356-.006.366-.009a8.97 8.97 0 0 0 1.308-.181c1.11-.25 2.002-.81 2.702-1.698a4.765 4.765 0 0 0 .97-1.846c.106-.4.166-.81.188-1.22.013-.25.015-.33.015-5.786V11.91c0-5.456-.002-5.536-.015-5.786zm-6.834 1.77l-4.89 8.7a1.49 1.49 0 0 1-2.04.545l-2.73-1.577a.373.373 0 0 1-.134-.51l.004-.007a.373.373 0 0 1 .51-.134l2.73 1.577a.744.744 0 0 0 1.02-.272l4.89-8.7a.373.373 0 0 1 .51-.134l.007.004a.373.373 0 0 1 .123.508z"/></svg>
+          Apple Music
+        </a>
+
+        <a class="link-btn youtube" href="https://www.youtube.com/@RiandShree" target="_blank" rel="noopener">
+          <svg class="link-icon" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+          Subscribe on YouTube
+        </a>
+
+      </div>
+      <div class="link-note">New content every week</div>
+    </section>
+
+    <!-- ── CONNECT ── -->
+    <div class="divider"></div>
+
+    <section id="connect" class="section" style="padding: 1rem 0 2rem;">
+      <div class="section-label">Follow · Reach Out</div>
+      <div class="links">
+
+        <a class="link-btn instagram" href="https://www.instagram.com/riandshree/" target="_blank" rel="noopener">
+          <svg class="link-icon" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+          Follow on Instagram
+        </a>
+
+      </div>
+      <div class="contact-text" style="margin-top:1.6rem;">
+        Say hello —<br />
+        <a href="mailto:riandshree@gmail.com">riandshree@gmail.com</a>
+        &nbsp;or&nbsp;
+        <a href="https://www.instagram.com/riandshree/" target="_blank" rel="noopener">@riandshree</a>
+      </div>
+    </section>
 
     <footer class="fade-6">
       <p>&copy; 2025 Ri & Shree &nbsp;·&nbsp; Independent</p>
     </footer>
 
   </div>
+
+  <script>
+    // Highlight active nav tab on scroll
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('nav a');
+
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navLinks.forEach(l => l.classList.remove('active'));
+          const match = document.querySelector(`nav a[href="#${entry.target.id}"]`);
+          if (match) match.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-40% 0px -55% 0px' });
+
+    sections.forEach(s => io.observe(s));
+  </script>
 
 </body>
 </html>
