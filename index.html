@@ -198,6 +198,15 @@
       background: url('photo.jpg') center 18% / cover no-repeat fixed;
     }
 
+    /* fixed attachment breaks on iOS/Android — fall back to scroll */
+    @media (max-width: 768px) {
+      .below-hero {
+        background-attachment: scroll;
+        background-image: url('photo-vertical.jpg');
+        background-position: center center;
+      }
+    }
+
     .below-hero::before {
       content: '';
       position: absolute;
