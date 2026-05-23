@@ -157,7 +157,7 @@
       color: var(--copper-lt);
     }
 
-    /* scroll cue */
+    /* ── SCROLL CUE — animated descending line ── */
     .scroll-cue {
       position: absolute;
       bottom: 2.4rem;
@@ -167,29 +167,29 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 0.5rem;
-      opacity: 0.5;
-      animation: cue-fade 2.5s ease-in-out infinite;
+      gap: 0.6rem;
+      transition: opacity 0.6s ease;
     }
 
     .scroll-cue span {
-      font-size: 0.52rem;
-      letter-spacing: 0.3em;
+      font-size: 0.5rem;
+      letter-spacing: 0.35em;
       text-transform: uppercase;
-      color: var(--copper-lt);
+      color: rgba(219,206,195,0.45);
     }
 
-    .scroll-cue svg {
-      width: 14px;
-      height: 14px;
-      fill: none;
-      stroke: var(--copper-lt);
-      stroke-width: 1.5;
+    .scroll-line {
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, rgba(200,149,103,0.7), transparent);
+      animation: line-drop 2.2s ease-in-out infinite;
+      transform-origin: top;
     }
 
-    @keyframes cue-fade {
-      0%, 100% { opacity: 0.35; transform: translateX(-50%) translateY(0); }
-      50%       { opacity: 0.7;  transform: translateX(-50%) translateY(5px); }
+    @keyframes line-drop {
+      0%   { transform: scaleY(0); opacity: 0; }
+      40%  { transform: scaleY(1); opacity: 1; }
+      100% { transform: scaleY(1) translateY(12px); opacity: 0; }
     }
 
     /* ── BELOW-HERO BACKGROUND ── */
@@ -198,7 +198,6 @@
       background: url('photo.jpg') center 18% / cover no-repeat fixed;
     }
 
-    /* fixed attachment breaks on iOS/Android — fall back to scroll */
     @media (max-width: 768px) {
       .below-hero {
         background-attachment: scroll;
@@ -213,10 +212,10 @@
       inset: 0;
       background:
         linear-gradient(to bottom,
-          rgba(19,13,11,0.92) 0%,
-          rgba(19,13,11,0.48) 25%,
-          rgba(19,13,11,0.48) 75%,
-          rgba(19,13,11,0.92) 100%
+          rgba(19,13,11,0.94) 0%,
+          rgba(19,13,11,0.52) 20%,
+          rgba(19,13,11,0.52) 80%,
+          rgba(19,13,11,0.94) 100%
         );
       pointer-events: none;
       z-index: 0;
@@ -241,15 +240,18 @@
       padding: 0 1rem 5rem;
     }
 
+    /* Removed hard border-left/border-right; content now breathes on the photo */
     .well {
       width: 100%;
-      max-width: 620px;
-      background: rgba(16,10,9,0.52);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border-left: 1px solid rgba(200,149,103,0.1);
-      border-right: 1px solid rgba(200,149,103,0.1);
-      padding: 0 2rem 3rem;
+      max-width: 660px;
+      background: rgba(16,10,9,0.38);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      /* subtle side fade instead of hard border */
+      box-shadow:
+        -40px 0 60px rgba(19,13,11,0.45),
+         40px 0 60px rgba(19,13,11,0.45);
+      padding: 0 2.5rem 3rem;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -312,35 +314,181 @@
       opacity: 1;
     }
 
-    .embed-wrap {
+    /* ── CUSTOM VIDEO THUMBNAIL ── */
+    .yt-thumb-wrap {
+      position: relative;
       width: 100%;
-      border-radius: 12px;
+      cursor: pointer;
+      border-radius: 10px;
       overflow: hidden;
       border: 1px solid var(--border-warm);
-      background: rgba(86,43,37,0.18);
-      margin: 0 auto 2rem;
-      box-shadow: 0 8px 40px rgba(19,13,11,0.6), inset 0 1px 0 rgba(219,206,195,0.08);
+      background: var(--dark);
+      margin: 0 auto 2.4rem;
+      box-shadow: 0 12px 50px rgba(19,13,11,0.7), inset 0 1px 0 rgba(219,206,195,0.07);
+      aspect-ratio: 16 / 9;
     }
 
-    .embed-wrap iframe {
-      display: block;
+    .yt-thumb-wrap img {
       width: 100%;
-      border: none;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: brightness(0.82) saturate(0.88);
+      transition: filter 0.4s ease, transform 0.5s ease;
     }
 
-    /* ── STORY ── */
+    .yt-thumb-wrap:hover img {
+      filter: brightness(0.68) saturate(0.8);
+      transform: scale(1.03);
+    }
+
+    /* warm vignette over the thumbnail */
+    .yt-thumb-wrap::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at center, transparent 40%, rgba(19,13,11,0.55) 100%);
+      pointer-events: none;
+    }
+
+    .yt-play-btn {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 2;
+      width: 62px;
+      height: 62px;
+      border-radius: 50%;
+      background: rgba(19,13,11,0.45);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1.5px solid rgba(200,149,103,0.55);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.3s ease, transform 0.3s ease, border-color 0.3s ease;
+    }
+
+    .yt-thumb-wrap:hover .yt-play-btn {
+      background: rgba(138,89,61,0.5);
+      border-color: rgba(200,149,103,0.9);
+      transform: translate(-50%, -50%) scale(1.1);
+    }
+
+    .yt-play-btn svg {
+      width: 20px;
+      height: 20px;
+      fill: var(--cream);
+      margin-left: 3px; /* optical center */
+    }
+
+    /* small caption below thumbnail */
+    .thumb-caption {
+      position: absolute;
+      bottom: 0.9rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      font-size: 0.52rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: rgba(219,206,195,0.5);
+      white-space: nowrap;
+      transition: opacity 0.3s;
+    }
+
+    .yt-thumb-wrap:hover .thumb-caption { opacity: 0; }
+
+    /* ── LIGHTBOX ── */
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 999;
+      background: rgba(10,6,5,0.93);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      animation: lb-in 0.3s ease both;
+    }
+
+    .lightbox.open { display: flex; }
+
+    @keyframes lb-in {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    .lightbox-inner {
+      width: 100%;
+      max-width: 840px;
+      position: relative;
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: -2.4rem;
+      right: 0;
+      background: none;
+      border: none;
+      color: var(--copper-lt);
+      cursor: pointer;
+      font-family: 'Jost', sans-serif;
+      font-size: 0.55rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      opacity: 0.6;
+      transition: opacity 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0;
+    }
+
+    .lightbox-close:hover { opacity: 1; }
+
+    .lightbox-close svg {
+      width: 12px;
+      height: 12px;
+      stroke: currentColor;
+      stroke-width: 1.5;
+      fill: none;
+    }
+
+    .lightbox-video {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid var(--border-warm);
+      box-shadow: 0 24px 80px rgba(19,13,11,0.8);
+    }
+
+    .lightbox-video iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
+
+    /* ── STORY — elevated ── */
     .story {
-      max-width: 400px;
-      margin: 0 auto 2.6rem;
+      max-width: 420px;
+      margin: 0 auto 2.8rem;
       text-align: center;
+      padding: 0 0.5rem;
     }
 
     .story p {
       font-family: 'Cormorant Garamond', serif;
       font-style: italic;
-      font-size: clamp(1.05rem, 3.2vw, 1.22rem);
-      line-height: 1.95;
-      color: rgba(237,224,212,0.75);
+      font-size: clamp(1.2rem, 3.8vw, 1.45rem);
+      line-height: 2.15;
+      color: rgba(237,224,212,0.72);
+      letter-spacing: 0.01em;
     }
 
     .story p em { font-style: normal; color: var(--copper); }
@@ -537,6 +685,8 @@
       letter-spacing: 0.22em;
       text-transform: uppercase;
     }
+
+    /* ── HERO ANIMATIONS ── */
     @keyframes heroFadeUp {
       from { opacity: 0; transform: translateY(30px); }
       to   { opacity: 1; transform: translateY(0); }
@@ -544,18 +694,40 @@
 
     .hero-wordmark { animation: heroFadeUp 1.2s ease both; animation-delay: 0.3s; }
     .hero-tagline  { animation: heroFadeUp 1.2s ease both; animation-delay: 0.6s; }
-    .scroll-cue    { animation: cue-fade 2.5s ease-in-out infinite; animation-delay: 1.4s; }
 
+    /* ── SCROLL REVEAL ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity 0.75s ease, transform 0.75s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* staggered children */
+    .reveal-stagger > * {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .reveal-stagger.visible > *:nth-child(1) { opacity: 1; transform: none; transition-delay: 0s; }
+    .reveal-stagger.visible > *:nth-child(2) { opacity: 1; transform: none; transition-delay: 0.1s; }
+    .reveal-stagger.visible > *:nth-child(3) { opacity: 1; transform: none; transition-delay: 0.2s; }
+    .reveal-stagger.visible > *:nth-child(4) { opacity: 1; transform: none; transition-delay: 0.3s; }
+
+    /* ── MOBILE ── */
     @media (max-width: 480px) {
       nav { gap: 1.6rem; }
       .well { padding: 0 1.2rem 3rem; }
       .links { max-width: 100%; }
       .wordmark { font-size: clamp(2.6rem, 13vw, 4rem); letter-spacing: 0.1em; }
-      .tagline {
-        font-size: 0.55rem;
-        letter-spacing: 0.18em;
-      }
+      .tagline { font-size: 0.55rem; letter-spacing: 0.18em; }
       .scroll-cue { bottom: 1.4rem; }
+      .yt-play-btn { width: 50px; height: 50px; }
     }
   </style>
 </head>
@@ -585,19 +757,18 @@
       </div>
     </div>
 
-    <div class="scroll-cue">
+    <!-- animated line scroll cue -->
+    <div class="scroll-cue" id="scroll-cue">
       <span>Scroll</span>
-      <svg viewBox="0 0 14 14"><polyline points="2,4 7,10 12,4"/></svg>
+      <div class="scroll-line"></div>
     </div>
 
     <button class="audio-btn" id="audio-btn" aria-label="Toggle audio">
-      <!-- muted icon shown by default -->
       <svg id="icon-muted" viewBox="0 0 24 24">
         <path d="M11 5L6 9H2v6h4l5 4V5z"/>
         <line x1="23" y1="9" x2="17" y2="15"/>
         <line x1="17" y1="9" x2="23" y2="15"/>
       </svg>
-      <!-- unmuted icon hidden by default -->
       <svg id="icon-sound" viewBox="0 0 24 24" style="display:none;">
         <path d="M11 5L6 9H2v6h4l5 4V5z"/>
         <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
@@ -615,25 +786,29 @@
 
         <!-- LATEST RELEASE -->
         <section id="release" class="section" style="padding-top:0;">
-          <div class="divider" style="margin-top:3rem;"></div>
-          <div style="text-align:center;">
+          <div class="divider reveal" style="margin-top:3rem;"></div>
+
+          <div style="text-align:center;" class="reveal">
             <div class="song-label">Latest Release</div>
             <div class="song-title">Aaye Re Piya</div>
             <div class="song-sub">— Udaipur Sessions —</div>
           </div>
 
-          <div class="embed-wrap">
-            <iframe
-              src="https://www.youtube.com/embed/8mSkUvx4Uss"
-              height="220"
-              allow="autoplay; encrypted-media; fullscreen; picture-in-picture"
-              allowfullscreen
+          <!-- Custom thumbnail that opens lightbox -->
+          <div class="yt-thumb-wrap reveal" id="yt-thumb" role="button" tabindex="0" aria-label="Watch Aaye Re Piya on YouTube">
+            <img
+              src="https://img.youtube.com/vi/8mSkUvx4Uss/maxresdefault.jpg"
+              alt="Aaye Re Piya — Ri & Shree, Udaipur Sessions"
               loading="lazy"
-              title="Aaye Re Piya - Ri & Shree">
-            </iframe>
+            />
+            <div class="yt-play-btn">
+              <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+            </div>
+            <div class="thumb-caption">Watch on YouTube</div>
           </div>
 
-          <div class="story">
+          <!-- Story — larger, more atmospheric -->
+          <div class="story reveal">
             <p>
               We ran away to Udaipur.<br />
               All we wanted was a sunset.<br />
@@ -643,11 +818,11 @@
         </section>
 
         <!-- ABOUT -->
-        <div class="divider"></div>
+        <div class="divider reveal"></div>
 
         <section id="about" class="section" style="padding-bottom:2rem;">
-          <div class="section-label">About Us</div>
-          <div class="about-body">
+          <div class="section-label reveal">About Us</div>
+          <div class="about-body reveal">
             We're Ri and Shree — a duo from Bengaluru<br />
             who find songs in unexpected places.<br /><br />
             Our music sits between folk and indie,<br />
@@ -656,15 +831,15 @@
             <strong>because the best feelings never do.</strong><br /><br />
             New music. Real stories. No filters.
           </div>
-          <div class="about-tag">#RiAndShree</div>
+          <div class="about-tag reveal">#RiAndShree</div>
         </section>
 
         <!-- MUSIC -->
-        <div class="divider"></div>
+        <div class="divider reveal"></div>
 
         <section id="music" class="section" style="padding-bottom:2rem;">
-          <div class="section-label">Listen · Subscribe</div>
-          <div class="links">
+          <div class="section-label reveal">Listen · Subscribe</div>
+          <div class="links reveal-stagger">
 
             <a class="link-btn primary" href="https://open.spotify.com/artist/1bnLhrAJK83BcMLtEalAIh?si=JSLSgAGkSjSHegNEHMcXwA" target="_blank" rel="noopener">
               <svg class="link-icon" viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.371-.721.49-1.101.241-3.021-1.858-6.832-2.278-11.322-1.237-.422.1-.851-.16-.948-.58-.1-.422.16-.851.582-.948 4.912-1.121 9.122-.64 12.513 1.43.371.24.49.721.241 1.101l.035-.007zm1.472-3.27c-.301.459-.929.601-1.388.299-3.449-2.12-8.71-2.738-12.79-1.5-.512.159-1.049-.129-1.209-.638-.159-.511.129-1.05.638-1.209 4.66-1.413 10.452-.73 14.421 1.71.459.301.601.929.299 1.388l.029-.05zm.129-3.4C15.77 8.27 9.21 8.07 5.94 9.08c-.614.181-1.26-.17-1.441-.784-.181-.614.17-1.26.784-1.441 3.77-1.14 10.041-.921 14.01 1.561.541.31.721 1.01.41 1.551-.31.541-1.01.721-1.551.41l-.01.002z"/></svg>
@@ -682,15 +857,15 @@
             </a>
 
           </div>
-          <div class="link-note">New content every week</div>
+          <div class="link-note reveal">New content every week</div>
         </section>
 
         <!-- CONNECT -->
-        <div class="divider"></div>
+        <div class="divider reveal"></div>
 
         <section id="connect" class="section" style="padding-bottom:2rem;">
-          <div class="section-label">Follow · Reach Out</div>
-          <div class="links">
+          <div class="section-label reveal">Follow · Reach Out</div>
+          <div class="links reveal">
 
             <a class="link-btn instagram" href="https://www.instagram.com/riandshree/" target="_blank" rel="noopener">
               <svg class="link-icon" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
@@ -698,7 +873,7 @@
             </a>
 
           </div>
-          <div class="contact-text" style="margin-top:1.6rem;">
+          <div class="contact-text reveal" style="margin-top:1.6rem;">
             Say hello —<br />
             <a href="mailto:riandshree@gmail.com">riandshree@gmail.com</a>
             &nbsp;or&nbsp;
@@ -706,7 +881,7 @@
           </div>
         </section>
 
-        <footer>
+        <footer class="reveal">
           <p>&copy; 2025 Ri & Shree &nbsp;·&nbsp; Independent</p>
         </footer>
 
@@ -714,15 +889,35 @@
     </div><!-- /well-wrap -->
   </div><!-- /below-hero -->
 
-  <script>
-    const nav = document.getElementById('main-nav');
-    const video = document.querySelector('.hero-video');
-    const audioBtn = document.getElementById('audio-btn');
-    const iconMuted = document.getElementById('icon-muted');
-    const iconSound = document.getElementById('icon-sound');
-    const audioLabel = document.getElementById('audio-label');
+  <!-- ── LIGHTBOX ── -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Video player">
+    <div class="lightbox-inner">
+      <button class="lightbox-close" id="lightbox-close">
+        <svg viewBox="0 0 12 12"><line x1="1" y1="1" x2="11" y2="11"/><line x1="11" y1="1" x2="1" y2="11"/></svg>
+        Close
+      </button>
+      <div class="lightbox-video">
+        <iframe
+          id="lightbox-iframe"
+          src=""
+          allow="autoplay; encrypted-media; fullscreen; picture-in-picture"
+          allowfullscreen
+          title="Aaye Re Piya — Ri & Shree">
+        </iframe>
+      </div>
+    </div>
+  </div>
 
-    // Audio toggle
+  <script>
+    const nav      = document.getElementById('main-nav');
+    const video    = document.querySelector('.hero-video');
+    const audioBtn = document.getElementById('audio-btn');
+    const iconMuted  = document.getElementById('icon-muted');
+    const iconSound  = document.getElementById('icon-sound');
+    const audioLabel = document.getElementById('audio-label');
+    const scrollCue  = document.getElementById('scroll-cue');
+
+    /* ── Audio toggle ── */
     audioBtn.addEventListener('click', () => {
       video.muted = !video.muted;
       if (video.muted) {
@@ -736,16 +931,14 @@
       }
     });
 
-    // Darken nav on scroll past hero
+    /* ── Scroll: darken nav + hide cue ── */
     window.addEventListener('scroll', () => {
-      if (window.scrollY > window.innerHeight * 0.6) {
-        nav.classList.add('scrolled');
-      } else {
-        nav.classList.remove('scrolled');
-      }
+      const y = window.scrollY;
+      nav.classList.toggle('scrolled', y > window.innerHeight * 0.6);
+      scrollCue.style.opacity = y > 80 ? '0' : '1';
     }, { passive: true });
 
-    // Active nav highlight
+    /* ── Active nav highlight ── */
     const sections = document.querySelectorAll('section[id]');
     const navLinks = document.querySelectorAll('nav a');
 
@@ -761,12 +954,43 @@
 
     sections.forEach(s => io.observe(s));
 
-    // Hide scroll cue on first scroll
-    const cue = document.querySelector('.scroll-cue');
-    window.addEventListener('scroll', () => {
-      if (window.scrollY > 80) cue.style.opacity = '0';
-      else cue.style.opacity = '';
-    }, { passive: true, once: false });
+    /* ── Scroll reveal ── */
+    const revealEls = document.querySelectorAll('.reveal, .reveal-stagger');
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    revealEls.forEach(el => revealObserver.observe(el));
+
+    /* ── YouTube lightbox ── */
+    const thumb     = document.getElementById('yt-thumb');
+    const lightbox  = document.getElementById('lightbox');
+    const lbClose   = document.getElementById('lightbox-close');
+    const lbIframe  = document.getElementById('lightbox-iframe');
+    const YT_SRC    = 'https://www.youtube.com/embed/8mSkUvx4Uss?autoplay=1&rel=0&color=white';
+
+    function openLightbox() {
+      lbIframe.src = YT_SRC;
+      lightbox.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      lightbox.classList.remove('open');
+      lbIframe.src = '';
+      document.body.style.overflow = '';
+    }
+
+    thumb.addEventListener('click', openLightbox);
+    thumb.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') openLightbox(); });
+    lbClose.addEventListener('click', closeLightbox);
+    lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
   </script>
 
 </body>
