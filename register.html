@@ -540,6 +540,20 @@
     .link-btn.youtube:hover { border-color: rgba(180,60,50,0.5); color: #f2c0bb; }
     .link-icon { width: 16px; height: 16px; flex-shrink: 0; fill: currentColor; }
 
+    /* ── STATEMENT LINE ── */
+    .statement-line {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-weight: 300;
+      font-size: clamp(1.45rem, 5vw, 2rem);
+      line-height: 1.55;
+      text-align: center;
+      color: var(--poster-cream);
+      max-width: 420px;
+      margin: 1.2rem auto;
+      text-shadow: 0 2px 26px rgba(19,13,11,0.8);
+    }
+
     /* ── CLOSING LINE ── */
     .closing-line {
       font-family: 'Cormorant Garamond', serif;
@@ -653,10 +667,9 @@
 
         <div>
           <a href="#register" class="hero-cta">
-            Save My Seat
+            Reserve Your Seat
             <svg viewBox="0 0 14 14"><polyline points="2,4 7,10 12,4"/></svg>
           </a>
-          <div class="seats-note">Pay as you wish</div>
         </div>
       </div>
 
@@ -670,17 +683,7 @@
 
         <!-- THE EVENING -->
         <section class="section reveal" style="padding-top:3.2rem;">
-          <div class="section-label">The Evening</div>
-          <div class="invite">
-            Two of us, one room in Pune,<br />
-            and everything we've been carrying.<br /><br />
-            Songs from our own lives.<br />
-            Stories from the world that made them.<br />
-            Feelings we haven't found other words for.<br /><br />
-            Folk, indie, and whatever sits between.<br />
-            <em>Come close. Stay a while.</em><br /><br />
-            <strong>From life, with love.</strong>
-          </div>
+          <p class="statement-line">Songs, stories and emotions</p>
         </section>
 
         <div class="divider"></div>
@@ -717,7 +720,7 @@
 
         <!-- REGISTER -->
         <section id="register" class="section reveal">
-          <div class="section-label">Save My Seat</div>
+          <div class="section-label">Reserve Your Seat</div>
 
           <div class="form-intro" id="form-intro">
             Tell us you're coming and we'll hold a seat for you.
@@ -765,7 +768,7 @@
               <textarea id="line" name="line" placeholder="Write as little or as much as you like."></textarea>
             </div>
 
-            <button type="submit" class="submit-btn" id="submit-btn">Save My Seat</button>
+            <button type="submit" class="submit-btn" id="submit-btn">Reserve Your Seat</button>
 
             <div class="form-error" id="form-error"></div>
           </form>
@@ -905,7 +908,7 @@
       const fail = (why) => {
         console.error('Registration not saved:', why);
         btn.disabled = false;
-        btn.textContent = 'Save My Seat';
+        btn.textContent = 'Reserve Your Seat';
         formError.innerHTML = 'That\'s on us, not you. Write to <a href="mailto:riandshree@gmail.com">riandshree@gmail.com</a> and we\'ll hold your seat by hand.';
         formError.style.display = 'block';
       };
