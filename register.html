@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Beyond the Line — Ri &amp; Shree · Live in Pune, 30 August</title>
+  <meta name="description" content="An evening of songs and stories with Ri &amp; Shree. Artsphere, Pune — Sunday 30 August, 6:30 PM. Pay as you wish." />
+  <meta property="og:title" content="Beyond the Line — Ri &amp; Shree · Pune, 30 August" />
+  <meta property="og:description" content="You didn't draw the line. You just stayed inside it. One evening on the other side — songs, stories, and where they came from." />
+  <meta property="og:image" content="share-card.jpg" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="theme-color" content="#7E2A1E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --dark:        #130d0b;
+      --brick:       #7E2A1E;   /* pulled from the poster */
+      --brick-deep:  #5A1A12;
+      --burgundy:    #562B25;
+      --terra:       #8A593D;
+      --copper:      #C89567;
+      --copper-lt:   #DBCEC3;
+      --poster-cream:#FFF4D0;   /* the poster's title colour */
+      --cream:       #EDE0D4;
+      --muted:       #A69D99;
+      --border:      rgba(200,149,103,0.18);
+      --border-warm: rgba(200,149,103,0.35);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      min-height: 100vh;
+      overflow-x: hidden;
+      color: var(--cream);
+      font-family: 'Jost', sans-serif;
+      font-weight: 300;
+      background: var(--dark);
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: center;
+      gap: 2.8rem;
+      padding: 1.2rem 1.5rem;
+      transition: background 0.4s ease, border-color 0.4s ease, backdrop-filter 0.4s ease;
+      border-bottom: 1px solid transparent;
+    }
+    nav.scrolled {
+      background: rgba(19,13,11,0.92);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom-color: var(--border);
+    }
+    nav a {
+      font-size: 0.59rem;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: rgba(237,224,212,0.7);
+      text-decoration: none;
+      padding-bottom: 3px;
+      border-bottom: 1px solid transparent;
+      transition: color 0.25s, border-color 0.25s;
+    }
+    nav a:hover { color: var(--cream); }
+    nav a.active { color: var(--copper); border-bottom-color: rgba(200,149,103,0.55); }
+
+    /* ══════════ HERO ══════════ */
+    .hero {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 7rem 1.5rem 4.5rem;
+      min-height: 100vh;
+    }
+
+    /* blurred poster as the backdrop — the poster becomes its own atmosphere */
+    .hero-bg {
+      position: absolute; inset: -8%;
+      z-index: 0;
+      background: url('poster-blur.jpg') center center / cover no-repeat;
+      transform: scale(1.06);
+      opacity: 0.55;
+    }
+    .hero-overlay {
+      position: absolute; inset: 0; z-index: 1;
+      background:
+        radial-gradient(ellipse at 50% 35%, rgba(126,42,30,0.28) 0%, transparent 62%),
+        linear-gradient(to bottom,
+          rgba(19,13,11,0.88) 0%,
+          rgba(19,13,11,0.66) 35%,
+          rgba(19,13,11,0.80) 72%,
+          rgba(19,13,11,0.99) 100%);
+    }
+    .grain {
+      position: absolute; inset: 0; z-index: 2; pointer-events: none; opacity: 0.45;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+      background-size: 180px;
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 3;
+      width: 100%;
+      max-width: 980px;
+      display: grid;
+      grid-template-columns: minmax(0, 0.92fr) minmax(0, 1fr);
+      gap: clamp(2rem, 5vw, 4rem);
+      align-items: center;
+    }
+
+    /* the poster itself, crisp */
+    .poster-frame {
+      position: relative;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid rgba(200,149,103,0.3);
+      box-shadow:
+        0 24px 70px rgba(0,0,0,0.6),
+        0 4px 18px rgba(90,26,18,0.5),
+        inset 0 1px 0 rgba(255,244,208,0.1);
+      animation: posterIn 1.3s cubic-bezier(.2,.7,.3,1) both;
+      animation-delay: 0.2s;
+    }
+    .poster-frame img { display: block; width: 100%; height: auto; }
+    .poster-frame::after {
+      content: '';
+      position: absolute; inset: 0;
+      pointer-events: none;
+      background: linear-gradient(160deg, rgba(255,244,208,0.10), transparent 42%);
+    }
+    @keyframes posterIn {
+      from { opacity: 0; transform: translateY(28px) scale(0.97); }
+      to   { opacity: 1; transform: none; }
+    }
+
+    .hero-text { text-align: left; }
+    .hero-text > * { animation: fadeUp 1.1s ease both; }
+    .hero-text > *:nth-child(1) { animation-delay: 0.45s; }
+    .hero-text > *:nth-child(2) { animation-delay: 0.60s; }
+    .hero-text > *:nth-child(3) { animation-delay: 0.75s; }
+    .hero-text > *:nth-child(4) { animation-delay: 0.90s; }
+    .hero-text > *:nth-child(5) { animation-delay: 1.05s; }
+    .hero-text > *:nth-child(6) { animation-delay: 1.20s; }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(22px); }
+      to   { opacity: 1; transform: none; }
+    }
+
+    .eyebrow {
+      font-size: 0.59rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--copper);
+      margin-bottom: 1.5rem;
+    }
+    .eyebrow .dot {
+      display: inline-block;
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--copper);
+      margin-right: 0.7em;
+      vertical-align: middle;
+      animation: pulse 2.4s ease-in-out infinite;
+    }
+    @keyframes pulse { 0%,100% { opacity: 0.3; } 50% { opacity: 1; } }
+
+    /* the line that does the work */
+    .hero-line {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-weight: 300;
+      font-size: clamp(1.5rem, 3.6vw, 2.15rem);
+      line-height: 1.5;
+      color: var(--poster-cream);
+      text-shadow: 0 2px 30px rgba(19,13,11,0.9);
+      margin-bottom: 1.5rem;
+    }
+    .hero-line span { color: var(--copper); }
+
+    .hero-sub {
+      font-size: clamp(0.58rem, 1.6vw, 0.68rem);
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: rgba(219,206,195,0.75);
+      padding-bottom: 1.8rem;
+      border-bottom: 1px solid rgba(200,149,103,0.16);
+      margin-bottom: 1.8rem;
+    }
+
+    .hero-meta { display: flex; flex-wrap: wrap; gap: 0.55rem; margin-bottom: 2rem; }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.55rem 1.05rem;
+      border: 1px solid var(--border);
+      border-radius: 50px;
+      background: rgba(19,13,11,0.55);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      font-size: 0.61rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--copper-lt);
+      text-decoration: none;
+      transition: border-color 0.25s, color 0.25s, background 0.25s;
+    }
+    a.chip:hover { border-color: var(--border-warm); color: var(--cream); background: rgba(126,42,30,0.35); }
+    .chip svg { width: 13px; height: 13px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
+
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      padding: 1.05rem 2.3rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 0.74rem;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--poster-cream);
+      background: rgba(126,42,30,0.72);
+      border: 1px solid rgba(200,149,103,0.42);
+      box-shadow: 0 6px 26px rgba(90,26,18,0.5);
+      transition: all 0.28s ease;
+    }
+    .hero-cta:hover {
+      background: var(--brick);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 36px rgba(126,42,30,0.65);
+    }
+    .hero-cta svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 1.6; }
+
+    .seats-note {
+      margin-top: 1rem;
+      font-size: 0.58rem;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--copper);
+      opacity: 0.85;
+    }
+
+    /* ══════════ BODY ══════════ */
+    .below { position: relative; background: var(--dark); }
+    .below::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 50% 0%, rgba(126,42,30,0.22), transparent 55%);
+      pointer-events: none;
+    }
+    .well-wrap { position: relative; z-index: 1; display: flex; justify-content: center; padding: 0 1rem 5rem; }
+    .well {
+      width: 100%;
+      max-width: 620px;
+      padding: 0 2rem 3rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      border-left: 1px solid rgba(200,149,103,0.1);
+      border-right: 1px solid rgba(200,149,103,0.1);
+      background: rgba(16,10,9,0.5);
+    }
+
+    .section { width: 100%; scroll-margin-top: 64px; }
+
+    .section-label {
+      font-size: 0.59rem;
+      letter-spacing: 0.38em;
+      text-transform: uppercase;
+      color: var(--copper);
+      text-align: center;
+      margin-bottom: 1.8rem;
+    }
+
+    .divider {
+      width: 48px; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--brick), var(--copper), var(--brick), transparent);
+      margin: 2.8rem auto;
+      opacity: 0.7;
+    }
+
+    /* ── THE EVENING ── */
+    .invite {
+      max-width: 440px;
+      margin: 0 auto;
+      text-align: center;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.05rem, 3.2vw, 1.2rem);
+      line-height: 2.05;
+      color: rgba(237,224,212,0.8);
+    }
+    .invite em { font-style: italic; color: var(--copper-lt); }
+    .invite strong { font-weight: 500; color: var(--copper); }
+    .invite .title-inline { font-style: italic; color: var(--poster-cream); }
+
+    /* ── DETAILS ── */
+    .details {
+      width: 100%;
+      max-width: 460px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      background: rgba(200,149,103,0.12);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .detail-row {
+      display: flex;
+      align-items: baseline;
+      gap: 1rem;
+      padding: 1.1rem 1.3rem;
+      background: rgba(19,13,11,0.78);
+    }
+    .detail-key {
+      flex: 0 0 88px;
+      font-size: 0.55rem;
+      letter-spacing: 0.26em;
+      text-transform: uppercase;
+      color: var(--copper);
+    }
+    .detail-val {
+      flex: 1;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.08rem;
+      line-height: 1.5;
+      color: var(--cream);
+    }
+    .detail-val small {
+      display: block;
+      font-family: 'Jost', sans-serif;
+      font-size: 0.62rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      margin-top: 0.28rem;
+      line-height: 1.6;
+    }
+    .detail-val a { color: var(--copper); text-decoration: none; border-bottom: 1px solid rgba(200,149,103,0.3); }
+    .detail-val a:hover { color: var(--copper-lt); border-color: var(--copper); }
+
+    /* ── FORM ── */
+    .form-intro {
+      text-align: center;
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: clamp(1rem, 3vw, 1.14rem);
+      line-height: 1.95;
+      color: rgba(237,224,212,0.72);
+      max-width: 400px;
+      margin: 0 auto 2.2rem;
+    }
+
+    form { width: 100%; max-width: 460px; margin: 0 auto; }
+    .field { margin-bottom: 1.4rem; }
+
+    .field label {
+      display: block;
+      font-size: 0.58rem;
+      letter-spacing: 0.26em;
+      text-transform: uppercase;
+      color: var(--copper);
+      margin-bottom: 0.55rem;
+      line-height: 1.7;
+    }
+    .field label .opt {
+      color: var(--muted);
+      letter-spacing: 0.12em;
+      text-transform: none;
+      font-size: 0.66rem;
+    }
+    .field .hint {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 0.92rem;
+      letter-spacing: 0;
+      text-transform: none;
+      color: rgba(166,157,153,0.9);
+      display: block;
+      margin-top: 0.35rem;
+      line-height: 1.6;
+    }
+
+    .field input,
+    .field select,
+    .field textarea {
+      width: 100%;
+      padding: 0.85rem 1rem;
+      background: rgba(19,13,11,0.7);
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      color: var(--cream);
+      font-family: 'Jost', sans-serif;
+      font-weight: 300;
+      font-size: 0.92rem;
+      transition: border-color 0.25s, background 0.25s, box-shadow 0.25s;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+    .field textarea { resize: vertical; min-height: 78px; line-height: 1.65; }
+    .field input::placeholder, .field textarea::placeholder { color: rgba(166,157,153,0.5); }
+
+    .field input:focus, .field select:focus, .field textarea:focus {
+      outline: none;
+      border-color: var(--border-warm);
+      background: rgba(30,17,14,0.9);
+      box-shadow: 0 0 0 3px rgba(126,42,30,0.25);
+    }
+
+    .field select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14'%3E%3Cpolyline points='2,4 7,10 12,4' fill='none' stroke='%23C89567' stroke-width='1.5'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 1rem center;
+      background-size: 12px;
+      padding-right: 2.4rem;
+      cursor: pointer;
+    }
+    .field select option { background: #1c1210; color: var(--cream); }
+
+    .field.invalid input, .field.invalid select, .field.invalid textarea { border-color: rgba(190,85,72,0.7); }
+    .field .err {
+      display: none;
+      margin-top: 0.4rem;
+      font-size: 0.62rem;
+      letter-spacing: 0.06em;
+      color: #d99a90;
+    }
+    .field.invalid .err { display: block; }
+
+    .hp { position: absolute; left: -9999px; opacity: 0; height: 0; width: 0; }
+
+    .submit-btn {
+      width: 100%;
+      margin-top: 0.6rem;
+      padding: 1.05rem 1.5rem;
+      border-radius: 8px;
+      border: 1px solid rgba(200,149,103,0.42);
+      background: rgba(126,42,30,0.72);
+      color: var(--poster-cream);
+      font-family: 'Jost', sans-serif;
+      font-size: 0.76rem;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.28s ease;
+      box-shadow: 0 6px 24px rgba(90,26,18,0.4);
+    }
+    .submit-btn:hover:not(:disabled) {
+      background: var(--brick);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 34px rgba(126,42,30,0.6);
+    }
+    .submit-btn:disabled { opacity: 0.55; cursor: not-allowed; transform: none; }
+
+    .form-error {
+      display: none;
+      margin-top: 1rem;
+      padding: 0.85rem 1rem;
+      border: 1px solid rgba(190,85,72,0.45);
+      border-radius: 7px;
+      background: rgba(126,42,30,0.28);
+      font-size: 0.72rem;
+      color: #e7b4ac;
+      text-align: center;
+      line-height: 1.8;
+    }
+    .form-error a { color: var(--copper); }
+
+    /* ── SUCCESS ── */
+    .success {
+      display: none;
+      width: 100%;
+      max-width: 460px;
+      margin: 0 auto;
+      text-align: center;
+      animation: fadeUp 0.9s ease both;
+    }
+    .success .tick {
+      width: 54px; height: 54px;
+      margin: 0 auto 1.6rem;
+      border-radius: 50%;
+      border: 1px solid var(--border-warm);
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(126,42,30,0.45);
+    }
+    .success .tick svg { width: 22px; height: 22px; fill: none; stroke: var(--poster-cream); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+    .success h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: clamp(1.8rem, 5.5vw, 2.4rem);
+      letter-spacing: 0.03em;
+      line-height: 1.25;
+      color: var(--poster-cream);
+      margin-bottom: 1.1rem;
+    }
+    .success p {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      line-height: 2;
+      color: rgba(237,224,212,0.75);
+    }
+    .success p em { font-style: italic; color: var(--copper-lt); }
+    .success .links { margin-top: 2.2rem; }
+
+    /* ── LINK BUTTONS ── */
+    .links { display: flex; flex-direction: column; gap: 0.75rem; width: 100%; max-width: 360px; margin: 0 auto; }
+    .link-btn {
+      display: flex; align-items: center; justify-content: center; gap: 0.65rem;
+      padding: 0.95rem 1.5rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 0.74rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      transition: all 0.28s ease;
+      border: 1px solid var(--border);
+      color: var(--cream);
+      background: rgba(19,13,11,0.5);
+    }
+    .link-btn:hover { border-color: var(--border-warm); color: var(--copper-lt); transform: translateY(-2px); box-shadow: 0 6px 24px rgba(126,42,30,0.4); }
+    .link-btn.instagram { border-color: rgba(140,100,140,0.22); }
+    .link-btn.instagram:hover { border-color: rgba(160,120,160,0.45); color: #ddc8e2; }
+    .link-btn.youtube { border-color: rgba(180,60,50,0.22); }
+    .link-btn.youtube:hover { border-color: rgba(180,60,50,0.5); color: #f2c0bb; }
+    .link-icon { width: 16px; height: 16px; flex-shrink: 0; fill: currentColor; }
+
+    /* ── CLOSING LINE ── */
+    .closing-line {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-weight: 300;
+      font-size: clamp(1.3rem, 4.4vw, 1.75rem);
+      line-height: 1.6;
+      text-align: center;
+      color: var(--poster-cream);
+      max-width: 420px;
+      margin: 0.6rem auto;
+      text-shadow: 0 2px 26px rgba(19,13,11,0.8);
+    }
+
+    .contact-text {
+      text-align: center;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1rem, 3vw, 1.1rem);
+      font-style: italic;
+      color: rgba(237,224,212,0.65);
+      line-height: 2.1;
+      margin-top: 1.4rem;
+    }
+    .contact-text a { font-style: normal; color: var(--copper); text-decoration: none; border-bottom: 1px solid rgba(200,149,103,0.3); }
+    .contact-text a:hover { color: var(--copper-lt); border-color: var(--copper); }
+
+    footer {
+      margin-top: 3.5rem;
+      text-align: center;
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      color: var(--copper);
+      text-transform: uppercase;
+      opacity: 0.8;
+    }
+
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.9s ease, transform 0.9s ease; }
+    .reveal.in { opacity: 1; transform: none; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 860px) {
+      .hero { padding: 6rem 1.5rem 3.5rem; min-height: 0; }
+      .hero-inner { grid-template-columns: 1fr; gap: 2.4rem; max-width: 460px; }
+      .hero-text { text-align: center; }
+      .hero-meta { justify-content: center; }
+      .hero-sub { border-bottom: none; padding-bottom: 0; margin-bottom: 1.6rem; }
+      .poster-frame { max-width: 380px; margin: 0 auto; }
+    }
+    @media (max-width: 480px) {
+      nav { gap: 1.5rem; }
+      .well { padding: 0 1.2rem 3rem; }
+      .hero { padding: 5.2rem 1.1rem 3rem; }
+      .poster-frame { max-width: 100%; }
+      .hero-line { font-size: 1.32rem; }
+      .detail-row { flex-direction: column; gap: 0.3rem; }
+      .detail-key { flex: none; }
+      .links { max-width: 100%; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+      .reveal { opacity: 1; transform: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── NAV ── -->
+  <nav id="main-nav">
+    <a href="/">Home</a>
+    <a href="/#music">Music</a>
+    <a href="#register" class="active">Register</a>
+  </nav>
+
+  <!-- ══════════ HERO ══════════ -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-overlay"></div>
+    <div class="grain"></div>
+
+    <div class="hero-inner">
+
+      <div class="poster-frame">
+        <img src="poster-900.jpg" alt="Beyond the Line — a concert by Ri &amp; Shree. Hands holding a cat's cradle of string over a deep red collage." width="900" height="900" />
+      </div>
+
+      <div class="hero-text">
+        <div class="eyebrow"><span class="dot"></span>Live · Pune</div>
+
+        <h1 class="hero-line">
+          You didn't draw the line.<br />
+          <span>You just stayed inside it.</span>
+        </h1>
+
+        <div class="hero-sub">Songs &nbsp;·&nbsp; Stories &nbsp;·&nbsp; Emotions</div>
+
+        <div class="hero-meta">
+          <span class="chip">
+            <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="8" y1="3" x2="8" y2="7"/><line x1="16" y1="3" x2="16" y2="7"/></svg>
+            Sun · 30 Aug
+          </span>
+          <span class="chip">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><polyline points="12,7 12,12 15,14"/></svg>
+            6:30 PM
+          </span>
+          <a class="chip" href="https://share.google/ibRtW5TWI0tfJ2ATs" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.6"/></svg>
+            Artsphere, Pune
+          </a>
+        </div>
+
+        <div>
+          <a href="#register" class="hero-cta">
+            Save My Seat
+            <svg viewBox="0 0 14 14"><polyline points="2,4 7,10 12,4"/></svg>
+          </a>
+          <div class="seats-note">Pay as you wish</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══════════ BODY ══════════ -->
+  <div class="below">
+    <div class="well-wrap">
+      <div class="well">
+
+        <!-- THE EVENING -->
+        <section class="section reveal" style="padding-top:3.2rem;">
+          <div class="section-label">The Evening</div>
+          <div class="invite">
+            There's a line around you.<br /><br />
+            Some of it was drawn before you arrived —<br />
+            caste, colour, creed, money.<br />
+            Some by people who loved you and were afraid.<br />
+            The tightest part, you drew yourself.<br /><br />
+            <span class="title-inline">Beyond the Line</span> is one evening<br />
+            on the other side of it.<br />
+            Songs, stories, and where they came from.<br /><br />
+            <strong>From life, with love.</strong>
+          </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <!-- THE DETAILS -->
+        <section class="section reveal">
+          <div class="section-label">The Details</div>
+          <div class="details">
+            <div class="detail-row">
+              <div class="detail-key">When</div>
+              <div class="detail-val">
+                Sunday, 30 August · 6:30 PM
+                <small>Come early — we start on time</small>
+              </div>
+            </div>
+            <div class="detail-row">
+              <div class="detail-key">Where</div>
+              <div class="detail-val">
+                Artsphere, Pune
+                <small><a href="https://share.google/ibRtW5TWI0tfJ2ATs" target="_blank" rel="noopener">Open in Google Maps →</a></small>
+              </div>
+            </div>
+            <div class="detail-row">
+              <div class="detail-key">Entry</div>
+              <div class="detail-val">
+                Pay as you wish
+                <small>Give what it was worth, at the door</small>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <!-- REGISTER -->
+        <section id="register" class="section reveal">
+          <div class="section-label">Save My Seat</div>
+
+          <div class="form-intro" id="form-intro">
+            Tell us you're coming and we'll hold a seat for you.
+          </div>
+
+          <form id="reg-form" novalidate>
+            <input class="hp" type="text" name="company" tabindex="-1" autocomplete="off" aria-hidden="true" />
+
+            <div class="field" data-field>
+              <label for="name">Your Name</label>
+              <input type="text" id="name" name="name" placeholder="First and last" autocomplete="name" required />
+              <div class="err">Please tell us your name.</div>
+            </div>
+
+            <div class="field" data-field>
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" placeholder="you@email.com" autocomplete="email" required />
+              <div class="err">Please enter a valid email — this is how we confirm.</div>
+            </div>
+
+            <div class="field" data-field>
+              <label for="phone">Phone <span class="opt">(WhatsApp)</span></label>
+              <input type="tel" id="phone" name="phone" placeholder="+91 " autocomplete="tel" required />
+              <div class="err">Please enter a number we can reach you on.</div>
+            </div>
+
+            <div class="field" data-field>
+              <label for="seats">How many of you?</label>
+              <select id="seats" name="seats" required>
+                <option value="Just me">Just me</option>
+                <option value="2">2 seats</option>
+                <option value="3">3 seats</option>
+                <option value="4">4 seats</option>
+                <option value="5">5 seats</option>
+                <option value="6+">6 or more</option>
+              </select>
+              <div class="err">Please pick a number of seats.</div>
+            </div>
+
+            <div class="field">
+              <label for="line">
+                Is there a line you've been told to stay inside? <span class="opt">(optional)</span>
+                <span class="hint">We may read some aloud on the night. Never with a name.</span>
+              </label>
+              <textarea id="line" name="line" placeholder="Write as little or as much as you like."></textarea>
+            </div>
+
+            <button type="submit" class="submit-btn" id="submit-btn">Save My Seat</button>
+
+            <div class="form-error" id="form-error"></div>
+          </form>
+
+          <!-- SUCCESS -->
+          <div class="success" id="success">
+            <div class="tick"><svg viewBox="0 0 24 24"><polyline points="4,13 9,18 20,6"/></svg></div>
+            <h2 id="success-head">There's a seat with your name on it</h2>
+            <p id="success-msg">
+              We'll write before the 30th with directions.<br /><br />
+              Until then — <em>see you on the other side of the line.</em>
+            </p>
+            <div class="links">
+              <a class="link-btn instagram" href="https://www.instagram.com/riandshree/" target="_blank" rel="noopener">
+                <svg class="link-icon" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+                Follow for updates
+              </a>
+            </div>
+          </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <!-- CLOSING LINE -->
+        <section class="section reveal">
+          <p class="closing-line">See you on the other side of the line</p>
+        </section>
+
+        <div class="divider"></div>
+
+        <!-- UNTIL THEN -->
+        <section class="section reveal">
+          <div class="section-label">Until Then</div>
+          <div class="links">
+            <a class="link-btn youtube" href="https://www.youtube.com/@RiandShree" target="_blank" rel="noopener">
+              <svg class="link-icon" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+              Hear us on YouTube
+            </a>
+          </div>
+          <div class="contact-text">
+            Questions? —<br />
+            <a href="mailto:riandshree@gmail.com">riandshree@gmail.com</a>
+            &nbsp;or&nbsp;
+            <a href="https://www.instagram.com/riandshree/" target="_blank" rel="noopener">@riandshree</a>
+          </div>
+        </section>
+
+        <footer>
+          <p>&copy; 2026 Ri &amp; Shree &nbsp;·&nbsp; Independent</p>
+        </footer>
+
+      </div><!-- /well -->
+    </div><!-- /well-wrap -->
+  </div><!-- /below -->
+
+  <script>
+    /* ══════════════════════════════════════════════════════════
+       PASTE YOUR GOOGLE APPS SCRIPT WEB APP URL BETWEEN THE QUOTES
+       (see SETUP.md — takes about 4 minutes)
+       ══════════════════════════════════════════════════════════ */
+    const SHEET_ENDPOINT = "https://script.google.com/macros/s/AKfycbxUiQjA8HOCm8CXGaIYMccIykYXYhsh7Akracw0z_SaVJ4DG-K59Yv4ve2LNJc06Zcb/exec";
+
+    const nav = document.getElementById('main-nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 60);
+    }, { passive: true });
+
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { rootMargin: '0px 0px -12% 0px' });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+    const form      = document.getElementById('reg-form');
+    const btn       = document.getElementById('submit-btn');
+    const formError = document.getElementById('form-error');
+    const success   = document.getElementById('success');
+    const formIntro = document.getElementById('form-intro');
+    const successHead = document.getElementById('success-head');
+
+    function validate() {
+      let ok = true, first = null;
+      form.querySelectorAll('[data-field]').forEach(f => {
+        const input = f.querySelector('input, select, textarea');
+        if (!input) return;
+        let bad = false;
+        if (input.hasAttribute('required') && !input.value.trim()) bad = true;
+        if (input.type === 'email' && input.value && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(input.value.trim())) bad = true;
+        if (input.type === 'tel' && input.value && input.value.replace(/\D/g, '').length < 8) bad = true;
+        f.classList.toggle('invalid', bad);
+        if (bad) { ok = false; if (!first) first = input; }
+      });
+      if (first) first.focus();
+      return ok;
+    }
+
+    form.querySelectorAll('input, select, textarea').forEach(el => {
+      const clear = () => { const f = el.closest('[data-field]'); if (f) f.classList.remove('invalid'); };
+      el.addEventListener('input', clear);
+      el.addEventListener('change', clear);
+    });
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      formError.style.display = 'none';
+
+      if (form.company.value) return;        // honeypot
+      if (!validate()) return;
+
+      btn.disabled = true;
+      btn.textContent = 'Saving your seat…';
+
+      const payload = {
+        timestamp: new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' }),
+        name:  form.name.value.trim(),
+        email: form.email.value.trim(),
+        phone: form.phone.value.trim(),
+        seats: form.seats.value,
+        line:  form.line.value.trim(),
+        event: 'Beyond the Line — Artsphere Pune, 30 Aug'
+      };
+
+      const showSuccess = () => {
+        form.style.display = 'none';
+        formIntro.style.display = 'none';
+        const n = payload.name.split(' ')[0];
+        if (n) successHead.textContent = 'There’s a seat with your name on it, ' + n;
+        success.style.display = 'block';
+        success.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      };
+
+      if (!SHEET_ENDPOINT || SHEET_ENDPOINT.indexOf('PASTE_YOUR') === 0) {
+        console.warn('SHEET_ENDPOINT not set — this registration was NOT saved.');
+        showSuccess();
+        return;
+      }
+
+      const fail = (why) => {
+        console.error('Registration not saved:', why);
+        btn.disabled = false;
+        btn.textContent = 'Save My Seat';
+        formError.innerHTML = 'That\'s on us, not you. Write to <a href="mailto:riandshree@gmail.com">riandshree@gmail.com</a> and we\'ll hold your seat by hand.';
+        formError.style.display = 'block';
+      };
+
+      try {
+        // text/plain keeps this a "simple" request → no CORS preflight against Apps Script
+        const res = await fetch(SHEET_ENDPOINT, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify(payload)
+        });
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+
+        // Apps Script returns 200 even when the script throws — check the body, not the status
+        const data = JSON.parse(await res.text());
+        if (data.result !== 'success') return fail(data.error || 'endpoint reported failure');
+        if (data.warning) console.warn(data.warning);
+        showSuccess();
+
+      } catch (err) {
+        fail(err);
+      }
+    });
+  </script>
+
+</body>
+</html>
