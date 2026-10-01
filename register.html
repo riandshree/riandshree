@@ -729,14 +729,21 @@
             <div class="field" data-field>
               <label for="seats">How many of you?</label>
               <select id="seats" name="seats" required>
-                <option value="Just me">Just me</option>
+                <option value="1">Just me</option>
                 <option value="2">2 seats</option>
                 <option value="3">3 seats</option>
                 <option value="4">4 seats</option>
                 <option value="5">5 seats</option>
-                <option value="6+">6 or more</option>
+                <option value="6">6 seats</option>
+                <option value="more">More than 6</option>
               </select>
               <div class="err">Please pick a number of seats.</div>
+            </div>
+
+            <div class="field" data-field id="seats-more-field" style="display:none;">
+              <label for="seats-more">How many seats exactly?</label>
+              <input type="number" id="seats-more" name="seatsMore" min="7" step="1" inputmode="numeric" placeholder="e.g. 8" />
+              <div class="err">Please enter a number — 7 or more.</div>
             </div>
 
             <div class="field">
@@ -836,12 +843,25 @@
         if (input.hasAttribute('required') && !input.value.trim()) bad = true;
         if (input.type === 'email' && input.value && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(input.value.trim())) bad = true;
         if (input.type === 'tel' && input.value && input.value.replace(/\D/g, '').length < 8) bad = true;
+        if (input.id === 'seats-more' && form.seats.value === 'more') {
+          const n = Number(input.value);
+          if (!input.value.trim() || !Number.isInteger(n) || n < 7) bad = true;
+        }
         f.classList.toggle('invalid', bad);
         if (bad) { ok = false; if (!first) first = input; }
       });
       if (first) first.focus();
       return ok;
     }
+
+    const seatsMoreField = document.getElementById('seats-more-field');
+    const seatsMore = document.getElementById('seats-more');
+    form.seats.addEventListener('change', () => {
+      const more = form.seats.value === 'more';
+      seatsMoreField.style.display = more ? '' : 'none';
+      seatsMoreField.classList.remove('invalid');
+      if (more) seatsMore.focus(); else seatsMore.value = '';
+    });
 
     form.querySelectorAll('input, select, textarea').forEach(el => {
       const clear = () => { const f = el.closest('[data-field]'); if (f) f.classList.remove('invalid'); };
@@ -864,7 +884,7 @@
         name:  form.name.value.trim(),
         email: form.email.value.trim(),
         phone: form.phone.value.trim(),
-        seats: form.seats.value,
+        seats: form.seats.value === 'more' ? Number(seatsMore.value) : Number(form.seats.value),
         line:  form.line.value.trim(),
         event: 'Beyond the Line — Nagpur, 1 Nov'
       };
