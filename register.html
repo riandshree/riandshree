@@ -746,14 +746,6 @@
               <div class="err">Please enter a number — 7 or more.</div>
             </div>
 
-            <div class="field">
-              <label for="line">
-                Is there a line you've been told to stay inside? <span class="opt">(optional)</span>
-                <span class="hint">We may read some aloud on the night. Never with a name.</span>
-              </label>
-              <textarea id="line" name="line" placeholder="Write as little or as much as you like."></textarea>
-            </div>
-
             <button type="submit" class="submit-btn" id="submit-btn">Reserve Your Seat</button>
 
             <div class="form-error" id="form-error"></div>
@@ -885,7 +877,6 @@
         email: form.email.value.trim(),
         phone: form.phone.value.trim(),
         seats: form.seats.value === 'more' ? Number(seatsMore.value) : Number(form.seats.value),
-        line:  form.line.value.trim(),
         event: 'Beyond the Line — Nagpur, 1 Nov'
       };
 
