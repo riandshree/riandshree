@@ -701,12 +701,6 @@
 
         <!-- REGISTER -->
         <section id="register" class="section reveal">
-          <div class="section-label">Reserve Your Seat</div>
-
-          <div class="form-intro" id="form-intro">
-            Tell us you're coming and we'll hold a seat for you.
-          </div>
-
           <form id="reg-form" novalidate>
             <input class="hp" type="text" name="company" tabindex="-1" autocomplete="off" aria-hidden="true" />
 
@@ -835,7 +829,6 @@
     const btn       = document.getElementById('submit-btn');
     const formError = document.getElementById('form-error');
     const success   = document.getElementById('success');
-    const formIntro = document.getElementById('form-intro');
     const successHead = document.getElementById('success-head');
 
     function validate() {
@@ -894,7 +887,6 @@
 
       const showSuccess = () => {
         form.style.display = 'none';
-        formIntro.style.display = 'none';
         const n = payload.name.split(' ')[0];
         if (n) successHead.textContent = 'There’s a seat with your name on it, ' + n;
         // WhatsApp links: confirmation to their own number, plus a ready-made invite to forward
