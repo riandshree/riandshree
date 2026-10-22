@@ -161,21 +161,34 @@
     }
 
     .eyebrow {
-      font-family: 'Jost', 'Tiro Devanagari Hindi', sans-serif;
-      font-size: 0.82rem;
-      letter-spacing: 0.22em;
+      display: flex; align-items: center; justify-content: center;
+      width: fit-content; max-width: 100%;
+      margin: 0 0 1.6rem;
+      gap: 0.7em;
+      padding: 0.55em 1.5em 0.6em;
+      border-radius: 999px;
+      background: var(--poster-cream);
+      color: var(--brick-deep);
+      box-shadow: 0 8px 34px rgba(19,13,11,0.6), 0 0 0 1px rgba(255,244,208,0.35);
+      white-space: nowrap;
+      font-size: clamp(0.95rem, 4.6vw, 1.5rem);
+      line-height: 1.2;
+    }
+    .eyebrow .en {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 500;
       text-transform: uppercase;
-      color: var(--copper);
-      margin-bottom: 1.5rem;
+      letter-spacing: 0.14em;
+    }
+    .eyebrow .hi {
+      font-family: 'Tiro Devanagari Hindi', serif;
+      font-size: 1.08em;
     }
     .eyebrow .dot {
-      display: inline-block;
-      width: 5px; height: 5px;
+      width: 0.34em; height: 0.34em;
       border-radius: 50%;
-      background: var(--copper);
-      margin-right: 0.7em;
-      vertical-align: middle;
-      animation: pulse 2.4s ease-in-out infinite;
+      background: var(--brick);
+      flex-shrink: 0;
     }
     @keyframes pulse { 0%,100% { opacity: 0.3; } 50% { opacity: 1; } }
 
@@ -592,6 +605,7 @@
       .hero { padding: 6rem 1.5rem 3.5rem; min-height: 0; }
       .hero-inner { grid-template-columns: 1fr; gap: 2.4rem; max-width: 460px; }
       .hero-text { text-align: center; }
+      .eyebrow { margin-left: auto; margin-right: auto; }
       .hero-meta { justify-content: center; }
       .hero-sub { border-bottom: none; padding-bottom: 0; margin-bottom: 1.6rem; }
       .poster-frame { max-width: 380px; margin: 0 auto; }
@@ -635,7 +649,7 @@
       </div>
 
       <div class="hero-text">
-        <div class="eyebrow"><span class="dot"></span>Music Concert · संगीत संध्या</div>
+        <div class="eyebrow"><span class="en">Music Concert</span><span class="dot"></span><span class="hi">संगीत संध्या</span></div>
 
         <h1 class="hero-line">
           Beyond the Line — लकीर के उस पार<br />
